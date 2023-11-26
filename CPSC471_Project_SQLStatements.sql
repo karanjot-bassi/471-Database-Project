@@ -25,8 +25,8 @@ Last_name VARCHAR(20) NOT NULL,
 Phone VARCHAR(20) NOT NULL,
 Account_balance DECIMAL(10, 2) NOT NULL,
 Employee_id INT,
-FOREIGN KEY (Employee_id) REFERENCES Admin(Employee_id) ON DELETE SET
-NULL
+FOREIGN KEY (Employee_id) REFERENCES Admin(Employee_id)
+ON DELETE SET NULL
 );
 
 -- Creates table of student payment info
@@ -189,9 +189,9 @@ INSERT INTO Location VALUES (0006, 'Weight Gym')
 INSERT INTO Location VALUES (0007, 'Courts')
 
 -- Bookings sample data
-INSERT INTO Bookings (000001, 2023-10-05, 2 Hours, 20011001, 0007, 10011003)
-INSERT INTO Bookings (000002, 2023-10-07, 2 Hours, 20011001, 0005, 10011002)
-INSERT INTO Bookings (000003, 2023-10-18, 2 Hours, 20011002, 0007, 10011003)
+INSERT INTO Bookings (000001, '2023-10-05', 2 Hours, 20011001, 0007, 10011003)
+INSERT INTO Bookings (000002, '2023-10-07', 2 Hours, 20011001, 0005, 10011002)
+INSERT INTO Bookings (000003, '2023-10-18', 2 Hours, 20011002, 0007, 10011003)
 
 -- Program sample data
 INSERT INTO Program VALUES (0001, 150.00, '3v3 Ball', 2023-09-9, 2023-12-6, 45, '3 on 3
@@ -210,11 +210,11 @@ INSERT INTO Program VALUES (0006, 165.00, 'Volleyball', 2023-09-9, 2023-12-6, 45
 -- Equipment rental sample data
 INSERT INTO Equipment_rental (0001, 10011001, 000001, 1, 2023-09-13, 2023-09-13,
 2023-09-13, 2023-09-13)
-INSERT INTO Equipment_rental (0002, 10011001, 000011, 1, 2023-09-14, 2023-09-14,
+INSERT INTO Equipment_rental (0002, 10011001, 000011, 1, '2023-09-14', 2023-09-14,
 2023-09-14, 2023-09-15)
-INSERT INTO Equipment_rental (0001, 10011002, 000111, 2, 2023-12-04, 2023-12-04, NULL,
+INSERT INTO Equipment_rental (0001, 10011002, 000111, 2, '2023-12-04', 2023-12-04, NULL,
 NULL)
-INSERT INTO Equipment_rental (0001, 10011001, 000001, 1, 2023-12-04, 2023-12-04, NULL,
+INSERT INTO Equipment_rental (0001, 10011001, 000001, 1, '2023-12-04', 2023-12-04, NULL,
 NULL)
 
 -- Program registration sample data
