@@ -4,12 +4,15 @@ Group: 12
 Group Members: Karanjot Bassi, Nicole Nguyen, Marwane Zaoudi
 */
 
+CREATE SCHEMA UniversitySports;
+
+
 /*
 This section deals with table creation.
 */
 
 -- Creates table of program administrators
-CREATE TABLE Admin (
+CREATE TABLE UniversitySports.Admin (
     Employee_id CHAR(8) PRIMARY KEY,
     First_name VARCHAR(20) NOT NULL,
     Last_name VARCHAR(20) NOT NULL,
@@ -89,7 +92,7 @@ CASCADE
 -- Creates a table of all possible booking locations
 CREATE TABLE Location (
     Location_id CHAR(4) PRIMARY KEY,
-    Name VARCHAR(20) NOT NULL,
+    Name VARCHAR(20) NOT NULL
 );
 
 -- Creates a table of the equipment inventory
@@ -142,15 +145,15 @@ INSERT INTO Admin (Employee_id, First_name, Last_name, Email, Phone) VALUES
     (A0000001, 'Admin', 'Admin', 'admin@ucalgary.ca', '403-100-1000'),
     (A0000002, 'Tim', 'Jones', 'johnjones@ucalgary.ca', '403-200-2000'),
     (A0000003, 'Sarah', 'John', 'sarahjohn@ucalgary.ca', '403-300-3000'),
-    (A0000004, 'John', 'Doe', 'johndoe@ucalgary.ca', '403-400-4000')
+    (A0000004, 'John', 'Doe', 'johndoe@ucalgary.ca', '403-400-4000');
 
 -- Student sample data
 INSERT INTO Student (Student_id, First_name, Last_name, Phone, Account_balance, Employee_id) VALUES 
-    (S0011001, 'Lebron', 'James', 'lebronjames@ucalgary.ca', $0.00),
-    (S0011002, 'Lionel', 'Messi', 'lionelmessi@ucalgary.ca', $0.00),
-    (S0011003, 'Derrick', 'Rose', 'derrickrose@ucalgary.ca', $0.00),
-    (S0011004, 'Cristiano', 'Ronaldo', 'cristianoronaldo@ucalgary.ca', $0.00),
-    (S0011005, 'DeMar', 'DeRozan', 'demarderozan@ucalgary.ca', $0.00)
+    (S0011001, 'Lebron', 'James', 'lebronjames@ucalgary.ca', 0.00),
+    (S0011002, 'Lionel', 'Messi', 'lionelmessi@ucalgary.ca', 0.00),
+    (S0011003, 'Derrick', 'Rose', 'derrickrose@ucalgary.ca', 0.00),
+    (S0011004, 'Cristiano', 'Ronaldo', 'cristianoronaldo@ucalgary.ca', 0.00),
+    (S0011005, 'DeMar', 'DeRozan', 'demarderozan@ucalgary.ca', 0.00);
 
 -- Equipment sample data
 INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, Sport_category)VALUES
@@ -167,7 +170,7 @@ INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, 
     (E007, 'Bike', 'Mountain Bike', 50, 'Cycling'),
     (E008, 'Bike', 'Road Bike', 50, 'Cycling'),
     (E010, 'Volleyball', 'Mikasa', 15, 'Volleyball'),
-    (E020, 'Volleyball', 'Mikasa (NEW)', 15, 'Volleyball')
+    (E020, 'Volleyball', 'Mikasa (NEW)', 15, 'Volleyball');
 
 -- Rentable equipment sample data
 INSERT INTO Rentable (Equipment_id, Rent_price, Max_duration) VALUES
@@ -177,24 +180,24 @@ INSERT INTO Rentable (Equipment_id, Rent_price, Max_duration) VALUES
     (E004, 2.00, '1 day'),
     (E005, 2.00, '1 day'),
     (E007, 40.00, '1 day'),
-    (E008, 30.00, '1 day')
+    (E008, 30.00, '1 day');
 
 -- Buyable equipment sample data
 INSERT INTO Buyable (Equipment_id, Purchase_price) VALUES
     (E011, 35.00),
     (E014, 60.00),
     (E015, 70.00),
-    (E016, 25.00)
+    (E016, 25.00);
 
 -- Location sample data
-INSERT INTO Location (Location_id, Name)VALUES
+INSERT INTO Location (Location_id, Name) VALUES
     (L001, 'Gold Gym'),
     (L002, 'Red Gym'),
     (L003, 'Jack simpson Gym'),
     (L004, 'Swimming Center'),
     (L005, 'Bouldering Wall'),
     (L006, 'Weight Gym'),
-    (L007, 'Courts')
+    (L007, 'Courts');
 
 -- Bookings sample data
 INSERT INTO Bookings VALUES (B00001, 2023-10-05, 2 , 20011001, 0007, 10011003)
