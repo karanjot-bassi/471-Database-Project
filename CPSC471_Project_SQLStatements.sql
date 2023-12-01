@@ -4,7 +4,9 @@ Group: 12
 Group Members: Karanjot Bassi, Nicole Nguyen, Marwane Zaoudi
 */
 
-CREATE SCHEMA UniversitySports;
+DROP DATABASE IF EXISTS UniSports;
+CREATE DATABASE UniSports; 
+USE UniSports;
 
 
 /*
@@ -12,7 +14,7 @@ This section deals with table creation.
 */
 
 -- Creates table of program administrators
-CREATE TABLE UniversitySports.Admin (
+CREATE TABLE Admin (
     Employee_id CHAR(8) PRIMARY KEY,
     First_name VARCHAR(20) NOT NULL,
     Last_name VARCHAR(20) NOT NULL,
@@ -27,9 +29,18 @@ CREATE TABLE Student (
     Last_name VARCHAR(20) NOT NULL,
     Phone VARCHAR(20) NOT NULL,
     Account_balance DECIMAL(10, 2) NOT NULL,
-    Employee_id INT,
+    Employee_id CHAR(8),
 FOREIGN KEY (Employee_id) REFERENCES Admin(Employee_id)
 ON DELETE SET NULL
+);
+
+CREATE TABLE Student_logins (
+	Student_id CHAR(8),
+    SUsername CHAR(16) PRIMARY KEY NOT NULL,
+    SPassword CHAR(16) NOT NULL,
+CONSTRAINT SUser
+	UNIQUE (SUsername),
+FOREIGN Key (Student_id) REFERENCES Student(Student_id)
 );
 
 -- Creates table of student payment info
