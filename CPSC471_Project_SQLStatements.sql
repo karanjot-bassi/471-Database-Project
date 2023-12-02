@@ -161,18 +161,18 @@ CASCADE
 /* Beginning of sample data */
 -- Admin sample data
 INSERT INTO Admin (Employee_id, First_name, Last_name, Email, Phone) VALUES
-    (A0000001, 'Admin', 'Admin', 'admin@ucalgary.ca', '403-100-1000'),
-    (A0000002, 'Tim', 'Jones', 'johnjones@ucalgary.ca', '403-200-2000'),
-    (A0000003, 'Sarah', 'John', 'sarahjohn@ucalgary.ca', '403-300-3000'),
-    (A0000004, 'John', 'Doe', 'johndoe@ucalgary.ca', '403-400-4000');
+    ('A0000001', 'Admin', 'Admin', 'admin@ucalgary.ca', '403-100-1000'),
+    ('A0000002', 'Tim', 'Jones', 'johnjones@ucalgary.ca', '403-200-2000'),
+    ('A0000003', 'Sarah', 'John', 'sarahjohn@ucalgary.ca', '403-300-3000'),
+    ('A0000004', 'John', 'Doe', 'johndoe@ucalgary.ca', '403-400-4000');
 
 -- Student sample data
-INSERT INTO Student (Student_id, First_name, Last_name, Phone, Account_balance, Employee_id) VALUES 
-    (S0011001, 'Lebron', 'James', 'lebronjames@ucalgary.ca', 0.00),
-    (S0011002, 'Lionel', 'Messi', 'lionelmessi@ucalgary.ca', 0.00),
-    (S0011003, 'Derrick', 'Rose', 'derrickrose@ucalgary.ca', 0.00),
-    (S0011004, 'Cristiano', 'Ronaldo', 'cristianoronaldo@ucalgary.ca', 0.00),
-    (S0011005, 'DeMar', 'DeRozan', 'demarderozan@ucalgary.ca', 0.00);
+INSERT INTO Student (Student_id, First_name, Last_name, Phone, Account_balance) VALUES 
+    ('S0011001', 'Lebron', 'James', '000-000-0000', 0.00),
+    ('S0011002', 'Lionel', 'Messi', '111-111-1111', 0.00),
+    ('S0011003', 'Derrick', 'Rose', '222-222-2222', 0.00),
+    ('S0011004', 'Cristiano', 'Ronaldo', '333-333-3333', 0.00),
+    ('S0011005', 'DeMar', 'DeRozan', '444-444-4444', 0.00);
 
 -- Equipment sample data
 INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, Sport_category)VALUES
