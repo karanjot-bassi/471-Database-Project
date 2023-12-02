@@ -43,6 +43,15 @@ CONSTRAINT SUser
 FOREIGN Key (Student_id) REFERENCES Student(Student_id)
 );
 
+CREATE TABLE Admin_logins (
+	Admin_id CHAR(8),
+    AUsername CHAR(16) PRIMARY KEY NOT NULL,
+    APassword CHAR(16) NOT NULL,
+CONSTRAINT AUser
+	UNIQUE (AUsername),
+FOREIGN Key (Admin_id) REFERENCES Admin(Employee_id)
+);
+
 -- Creates table of student payment info
 CREATE TABLE Student_payment_info (
     Student_id CHAR(8) NOT NULL,
@@ -50,24 +59,22 @@ CREATE TABLE Student_payment_info (
     Card_number VARCHAR(16) NOT NULL,
     Card_expire DATE NOT NULL,
     CVV VARCHAR(4) NOT NULL,
+FOREIGN KEY (Student_id) REFERENCES Student (Student_id)
 );
 
 -- Creates a table of all processed payments
-    CREATE TABLE Payment (
+CREATE TABLE Payment (
     Invoiceid CHAR(8) PRIMARY KEY,
     Student_id CHAR(8),
 FOREIGN KEY (Student_id) REFERENCES Student (student_id) ON DELETE
 CASCADE
 );
 
--- Creates a table of all the programs students are registered for
-CREATE TABLE Registers_for (
-    Student_id CHAR(8) NOT NULL,
-    Program_id CHAR(4) NOT NULL,
-FOREIGN KEY (Student_id) REFERENCES Student(Student_id) ON DELETE
-CASCADE,
-FOREIGN KEY (Program_id) REFERENCES Program(Program_id) ON DELETE
-CASCADE
+
+-- Creates a table of all possible booking locations
+CREATE TABLE Location (
+    Location_id CHAR(4) PRIMARY KEY,
+    Name VARCHAR(20) NOT NULL
 );
 
 -- Creates a table of all the program offerings
@@ -80,8 +87,17 @@ CREATE TABLE Program (
     Available_slots INT NOT NULL,
     Description TEXT,
     Location_id CHAR(4) NOT NULL,
-FOREIGN KEY (Location_id) REFERENCES Location(Location_id) ON DELETE SET
-NULL
+FOREIGN KEY (Location_id) REFERENCES Location(Location_id) ON DELETE CASCADE
+);
+
+-- Creates a table of all the programs students are registered for
+CREATE TABLE Registers_for (
+    Student_id CHAR(8) NOT NULL,
+    Program_id CHAR(4) NOT NULL,
+FOREIGN KEY (Student_id) REFERENCES Student(Student_id) ON DELETE
+CASCADE,
+FOREIGN KEY (Program_id) REFERENCES Program(Program_id) ON DELETE
+CASCADE
 );
 
 -- Creates a table of all the bookings made by students
@@ -92,18 +108,10 @@ CREATE TABLE Bookings (
     Employee_id CHAR(8) NOT NULL,
     Location_id CHAR(4) NOT NULL,
     Student_id CHAR(8) NOT NULL,
-FOREIGN KEY (Employee_id) REFERENCES Admin(Employee_id) ON DELETE SET
-NULL,
-FOREIGN KEY (Location_id) REFERENCES Location(Location_id) ON DELETE SET
-NULL,
+FOREIGN KEY (Employee_id) REFERENCES Admin(Employee_id) ON DELETE CASCADE,
+FOREIGN KEY (Location_id) REFERENCES Location(Location_id) ON DELETE CASCADE,
 FOREIGN KEY (Student_id) REFERENCES Student(Student_id) ON DELETE
 CASCADE
-);
-
--- Creates a table of all possible booking locations
-CREATE TABLE Location (
-    Location_id CHAR(4) PRIMARY KEY,
-    Name VARCHAR(20) NOT NULL
 );
 
 -- Creates a table of the equipment inventory
@@ -182,7 +190,7 @@ INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, 
     (E008, 'Bike', 'Road Bike', 50, 'Cycling'),
     (E010, 'Volleyball', 'Mikasa', 15, 'Volleyball'),
     (E020, 'Volleyball', 'Mikasa (NEW)', 15, 'Volleyball');
-
+    
 -- Rentable equipment sample data
 INSERT INTO Rentable (Equipment_id, Rent_price, Max_duration) VALUES
     (E001, 0.00, '1 day'),
@@ -211,9 +219,9 @@ INSERT INTO Location (Location_id, Name) VALUES
     (L007, 'Courts');
 
 -- Bookings sample data
-INSERT INTO Bookings VALUES (B00001, 2023-10-05, 2 , 20011001, 0007, 10011003)
-INSERT INTO Bookings VALUES (B00002, 2023-10-07, 2 , 20011001, 0005, 10011002)
-INSERT INTO Bookings VALUES (B00003, 2023-10-18, 2 , 20011002, 0007, 10011003)
+INSERT INTO Bookings( VALUES (B00001, 2023-10-05, 2 , L0011001, 0007, 10011003)
+INSERT INTO Bookings VALUES (B00002, 2023-10-07, 2 , L0011001, 0005, 10011002)
+INSERT INTO Bookings VALUES (B00003, 2023-10-18, 2 , L0011002, 0007, 10011003)
 
 -- Program sample data
 INSERT INTO Program VALUES (P001, 150.00, '3v3 Ball', 2023-09-9, 2023-12-6, 45, '3 on 3
