@@ -174,6 +174,9 @@ INSERT INTO Student (Student_id, First_name, Last_name, Phone, Account_balance) 
     ('S0011004', 'Cristiano', 'Ronaldo', '333-333-3333', 0.00),
     ('S0011005', 'DeMar', 'DeRozan', '444-444-4444', 0.00);
 
+INSERT INTO Admin_logins (Admin_id, AUsername, APassword) VALUES
+    ()
+
 -- Equipment sample data
 INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, Sport_category)VALUES
     (E001, 'Ball', 'Wilson Ball', 15, 'Basketball'),
