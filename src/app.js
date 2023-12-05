@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
-
 const app = express();
+var connection = require('./db');
 
 
 
@@ -51,4 +51,8 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
+    connection.connect(function(err){
+        if(err) throw err;
+        console.log('Database connected');
+    })
 });
