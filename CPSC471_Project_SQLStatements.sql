@@ -175,83 +175,88 @@ INSERT INTO Student (Student_id, First_name, Last_name, Phone, Account_balance) 
     ('S0011005', 'DeMar', 'DeRozan', '444-444-4444', 0.00);
 
 INSERT INTO Admin_logins (Admin_id, AUsername, APassword) VALUES
-    ()
+    ();
+    
+INSERT INTO Student_logins (Student_id, SUsername, SPassword) VALUES
+	();
 
 -- Equipment sample data
 INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, Sport_category)VALUES
-    (E001, 'Ball', 'Wilson Ball', 15, 'Basketball'),
-    (E011, 'Ball', 'Wilson Ball (NEW)', 25, 'Basketball'),
-    (E002, 'Ball', 'Spalding Ball', 10, 'Basketball'),
-    (E003, 'Ball', 'Adidas Ball', 15, 'Soccer'),
-    (E004, 'Squash racquet', 'Wilson', 20, 'Squash'),
-    (E014, 'Squash racquet', 'Wilson (NEW)', 35, 'Squash'),
-    (E005, 'Tennis racquet', 'Wilson', 15, 'Tennis'),
-    (E015, 'Tennis racquet', 'Wilson (NEW)', 40, 'Tennis'),
-    (E016, 'Goggles', 'Swimming Goggles', 50, 'Swimming'),
-    (E009, 'Flippers', 'Speedo', 30, 'Swimming'),
-    (E007, 'Bike', 'Mountain Bike', 50, 'Cycling'),
-    (E008, 'Bike', 'Road Bike', 50, 'Cycling'),
-    (E010, 'Volleyball', 'Mikasa', 15, 'Volleyball'),
-    (E020, 'Volleyball', 'Mikasa (NEW)', 15, 'Volleyball');
+    ('E001', 'Ball', 'Wilson Ball', 15, 'Basketball'),
+    ('E011', 'Ball', 'Wilson Ball (NEW)', 25, 'Basketball'),
+    ('E002', 'Ball', 'Spalding Ball', 10, 'Basketball'),
+    ('E003', 'Ball', 'Adidas Ball', 15, 'Soccer'),
+    ('E004', 'Squash racquet', 'Wilson', 20, 'Squash'),
+    ('E014', 'Squash racquet', 'Wilson (NEW)', 35, 'Squash'),
+    ('E005', 'Tennis racquet', 'Wilson', 15, 'Tennis'),
+    ('E015', 'Tennis racquet', 'Wilson (NEW)', 40, 'Tennis'),
+    ('E016', 'Goggles', 'Swimming Goggles', 50, 'Swimming'),
+    ('E009', 'Flippers', 'Speedo', 30, 'Swimming'),
+    ('E007', 'Bike', 'Mountain Bike', 50, 'Cycling'),
+    ('E008', 'Bike', 'Road Bike', 50, 'Cycling'),
+    ('E010', 'Volleyball', 'Mikasa', 15, 'Volleyball'),
+    ('E020', 'Volleyball', 'Mikasa (NEW)', 15, 'Volleyball');
     
 -- Rentable equipment sample data
 INSERT INTO Rentable (Equipment_id, Rent_price, Max_duration) VALUES
-    (E001, 0.00, '1 day'),
-    (E002, 0.00, '1 day'),
-    (E003, 0.00, '1 day'),
-    (E004, 2.00, '1 day'),
-    (E005, 2.00, '1 day'),
-    (E007, 40.00, '1 day'),
-    (E008, 30.00, '1 day');
+    ('E001', 0.00, '1 day'),
+    ('E002', 0.00, '1 day'),
+    ('E003', 0.00, '1 day'),
+    ('E004', 2.00, '1 day'),
+    ('E005', 2.00, '1 day'),
+    ('E007', 40.00, '1 day'),
+    ('E008', 30.00, '1 day');
 
 -- Buyable equipment sample data
 INSERT INTO Buyable (Equipment_id, Purchase_price) VALUES
-    (E011, 35.00),
-    (E014, 60.00),
-    (E015, 70.00),
-    (E016, 25.00);
+    ('E011', 35.00),
+    ('E014', 60.00),
+    ('E015', 70.00),
+    ('E016', 25.00);
 
 -- Location sample data
 INSERT INTO Location (Location_id, Name) VALUES
-    (L001, 'Gold Gym'),
-    (L002, 'Red Gym'),
-    (L003, 'Jack simpson Gym'),
-    (L004, 'Swimming Center'),
-    (L005, 'Bouldering Wall'),
-    (L006, 'Weight Gym'),
-    (L007, 'Courts');
+    ('L001', 'Gold Gym'),
+    ('L002', 'Red Gym'),
+    ('L003', 'Jack simpson Gym'),
+    ('L004', 'Swimming Center'),
+    ('L005', 'Bouldering Wall'),
+    ('L006', 'Weight Gym'),
+    ('L007', 'Courts');
 
 -- Bookings sample data
-INSERT INTO Bookings( VALUES (B00001, 2023-10-05, 2 , L0011001, 0007, 10011003)
-INSERT INTO Bookings VALUES (B00002, 2023-10-07, 2 , L0011001, 0005, 10011002)
-INSERT INTO Bookings VALUES (B00003, 2023-10-18, 2 , L0011002, 0007, 10011003)
+INSERT INTO Bookings (Booking_id, Booking_date, Booking_duration, Employee_id, Location_id, Student_id) VALUES
+	('B00001', 2023-10-05, 2 , 'A0000001', 'L007', 'S0011003'),
+	('B00002', 2023-10-07, 2 , 'A0000001', 'L005', 'S0011002'),
+	('B00003', 2023-10-18, 2 , 'A0000002', 'L007', 'S0011003');
 
 -- Program sample data
-INSERT INTO Program VALUES (P001, 150.00, '3v3 Ball', 2023-09-9, 2023-12-6, 45, '3 on 3
-Basketball tournament', 'Gold Gym')
-INSERT INTO Program VALUES (P002, 50.00, 'Swim Lessons', 2023-10-5, 2023-10-12, 30,
-'Beginner Lessons', 'Swimming Center')
-INSERT INTO Program VALUES (P003, 5.00, 'Bouldering', 2023-11-09, 2023-11-09, 25, 'Group
-Bouldering', 'Bouldering Wall')
-INSERT INTO Program VALUES (P004, 80.00, 'Gym Training', 2023-01-07, 2023-04-06, 45,
-'Group Training', 'Weight Gym')
-INSERT INTO Program VALUES (P005, 15.00, 'Badminton', 2023-11-01, 2023-12-06, 45, NULL,
-'Red Gym')
-INSERT INTO Program VALUES (P006, 165.00, 'Volleyball', 2023-09-9, 2023-12-6, 45,
-'Volleyball tournament', 'Jack Simpson')
+INSERT INTO Program 
+	(Program_id, Price, Name, Start_date, End_date, Available_slots, Description, Location_id)
+    VALUES
+	('P001', 150.00, '3v3 Ball', 2023-09-9, 2023-12-6, 45, '3 on 3
+	Basketball tournament', 'Gold Gym'),
+	('P002', 50.00, 'Swim Lessons', 2023-10-5, 2023-10-12, 30,
+	'Beginner Lessons', 'Swimming Center'),
+	('P003', 5.00, 'Bouldering', 2023-11-09, 2023-11-09, 25, 'Group 
+    Bouldering', 'Bouldering Wall'),
+	('P004', 80.00, 'Gym Training', 2023-01-07, 2023-04-06, 45,
+	'Group Training', 'Weight Gym'),
+	('P005', 15.00, 'Badminton', 2023-11-01, 2023-12-06, 45, NULL,
+	'Red Gym'),
+	('P006', 165.00, 'Volleyball', 2023-09-9, 2023-12-6, 45,
+	'Volleyball tournament', 'Jack Simpson');
 
 -- Equipment rental sample data
-INSERT INTO Equipment_rental VALUES (ER001, 10011001, E001, 1, 2023-09-13, 2023-09-13,
-2023-09-13, 2023-09-13)
-INSERT INTO Equipment_rental VALUES (ER002, 10011001, E011, 1, 2023-09-14, 2023-09-14,
-2023-09-14, 2023-09-15)
-INSERT INTO Equipment_rental VALUES (ER001, 10011002, ER00111, 2, 2023-12-04, 2023-12-04, NULL,
-NULL)
-INSERT INTO Equipment_rental VALUES (ER001, 10011001, 000001, 1, 2023-12-04, 2023-12-04, NULL,
-NULL)
+INSERT INTO Equipment_rental (Equipment_id, Student_id, RentalID, Item_amt, Rental_date, Pickup_date, Expected_return_date, Actual_return_date)VALUES
+	('E001', 'S0011001', 'R00001', 1, 2023-09-13, 2023-09-13, 2023-09-13, 2023-09-13),
+	('E002', 'S0011001', 'R00011', 1, 2023-09-14, 2023-09-14, 2023-09-14, 2023-09-15),
+	('E001', 'S0011002', 'R00111', 2, 2023-12-04, 2023-12-04, NULL, NULL),
+	('E001', 'S0011001', 'R01111', 1, 2023-12-04, 2023-12-04, NULL, NULL);
 
 -- Program registration sample data
-INSERT INTO Registers_for VALUES (10011001, P002)
-INSERT INTO Registers_for VALUES (10011002, P003)
-INSERT INTO Registers_for VALUES (10011001, P001)
-INSERT INTO Registers_for VALUES (10011003, P006)
+INSERT INTO Registers_for (Student_id, Program_id) VALUES
+	('S0011001', 'P002'),
+	('S0011002', 'P003'),
+	('S0011001', 'P001'),
+	('S0011003', 'P006');
