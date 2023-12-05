@@ -7,5 +7,15 @@ var connection = mysql.createConnection({
     password: 'Uniting481fall'
 });
 
+
+connection.query('SELECT * FROM student', function (error, results, fields) {
+    if (error) {
+        console.log('Error in executing query:', error);
+    } else {
+        console.log('Contents of "student":', results);
+    }
+    connection.end();
+});
+
 module.exports = connection;
 
