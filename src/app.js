@@ -1,15 +1,23 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-var connection = require('./db');
+const connection = require('./db');
 
 
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+// const sendFileHandler = (req, res) => {
+//     const pageName = req.params.page || 'index';
+//     res.sendFile(path.join(__dirname, `pages/${pageName}.html`));
+// };
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/index.html'));
 })
+
+// app.get('/:page', sendFileHandler);
+
 
 app.get('/shome', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/shome.html'));
@@ -54,5 +62,5 @@ app.listen(port, () => {
     connection.connect(function(err){
         if(err) throw err;
         console.log('Database connected');
-    })
+    });
 });
