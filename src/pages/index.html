@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Active Living | Home</title>
+    <title>Active Living | Sign-in</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -24,103 +24,54 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
-
   <body>
-    <!--NAVBAR-->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/index">Active Living</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarNav"
-        >
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/index">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/equipment">Equipment</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/book">Book</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/programs">Programs</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/settings">Settings</a>
-            </li>
-            <li class="nav-item">
-              <a href="/">
-                <button type="button" class="btn btn-outline-danger">
-                  Sign-Out
-                </button>
-              </a>
-            </li>
-          </ul>
-        </div>
+    <div class="container mt-4 mb-4 text-center">
+      <div>
+        <h1>Active Living</h1>
       </div>
-    </nav>
-
-    <div class="container px-4 mt-5">
-      <h2 class="mt-5">Upcoming Events</h2>
-      <table class="table">
-        <thead class="table-light">
-          <th>Event</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Location</th>
-        </thead>
-        <tbody></tbody>
-      </table>
-
-      <h2 class="mt-5">Book</h2>
-      <table class="table">
-        <thead class="table-light">
-          <th>Event</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Location</th>
-        </thead>
-        <tbody></tbody>
-      </table>
-
-      <h2 class="mt-5">Rented</h2>
-      <table class="table">
-        <thead class="table-light">
-          <th>Item</th>
-          <th>Description</th>
-          <th>Date</th>
-          <th>Expected Return Date</th>
-          <th>Return Date</th>
-        </thead>
-        <tbody></tbody>
-      </table>
-
-      <h2 class="mt-5">Purchased</h2>
-      <table class="table">
-        <thead class="table-light">
-          <th>Item</th>
-          <th>Description</th>
-          <th>Time</th>
-          <th>Price</th>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div>
+        <p>
+          Welcome to the active living website. Here you can easily making
+          equipment rentals, join programs and much more!
+        </p>
+      </div>
     </div>
 
-    <!-- Bootstrap JavaScript Libraries -->
+    <div class="container">
+      <ul class="nav nav-underline">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/"
+            >Student Login-in</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/adminsignin"
+            >Admin Login-in</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div class="container border">
+      <form id="signin" action="/shome" method="get">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Email address</label
+          >
+          <input type="email" class="form-control" id="exampleInputEmail1" />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="exampleInputPassword1"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
