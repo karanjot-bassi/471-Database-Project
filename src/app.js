@@ -8,11 +8,11 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/signin.html'));
+    res.sendFile(path.join(__dirname, 'pages/index.html'));
 })
 
-app.get('/index', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/index.html'));
+app.get('/shome', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages/shome.html'));
 })
 
 app.get('/settings', (req, res) => {
@@ -35,6 +35,13 @@ app.get('/adminsignin', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/adminsignin.html'));
 })
 
+app.get('/adminhome', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages/adminhome.html'));
+})
+
+app.get('/studentLU', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages/studentLU.html'));
+})
 
 const port = process.env.PORT || 3000;
 

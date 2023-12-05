@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Active Living | Equipment</title>
+    <title>Admin Student Look Up</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -29,7 +29,9 @@
     <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/shome">Active Living</a>
+        <a class="navbar-brand" href="/adminhome"
+          >Active Living | Admin - Student Look Up</a
+        >
         <button
           class="navbar-toggler"
           type="button"
@@ -47,20 +49,13 @@
         >
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/shome">Home</a>
+              <a class="nav-link" aria-current="page" href="/adminhome">Home</a>
             </li>
+
             <li class="nav-item">
-              <a class="nav-link active" href="/equipment">Equipment</a>
+              <a class="nav-link active" href="/studentLU">Student Look Up</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/book">Book</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/programs">Programs</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/settings">Settings</a>
-            </li>
+
             <li class="nav-item">
               <a href="/">
                 <button type="button" class="btn btn-outline-danger">
@@ -74,45 +69,44 @@
     </nav>
 
     <div>
-      <h1>Equipment</h1>
-    </div>
-    <div>
       <p>
-        Here you can Purchase or Rent equipment. Note some items can be rented
-        and purchased and some may only be purchasable
+        Here you can search up students and see their bookings and what they
+        have rented
       </p>
     </div>
+
     <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="card" style="width: 18rem">
-            <img src="..." class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-            </div>
-            <div class="card-body">
-              <a href="#" class="card-link">Buy</a>
-              <a href="#" class="card-link">Rent</a>
-            </div>
-          </div>
+      <div class="search-container">
+        <div class="search-box">
+          <input
+            type="text"
+            id="vendor-search"
+            placeholder="Search for vendors..."
+            onkeyup="filterVendors()"
+          />
+          <button onclick="filterVendors()">🔍</button>
         </div>
-        <div class="col">
-          <div class="card" style="width: 18rem">
-            <img src="..." class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-            </div>
-            <div class="card-body">
-              <a href="#" class="card-link">Buy</a>
-              <a href="#" class="card-link">Rent</a>
+        <div class="ven1-results">
+          <div class="vendor">
+            <a href="vendor-info-page-1.html" class="vendor-link">
+              <img
+                src="images/vendor-image1.png"
+                alt="Vendor 1"
+                class="vendor-img"
+              />
+              <div class="vendor-info">
+                <h2>Mr. Dice Guy</h2>
+                <p>Every roll should tell a story.</p>
+              </div>
+            </a>
+            <div class="ven1-actions">
+              <button
+                class="bookmark-btn"
+                id="bookmark-btn-1"
+                onclick="toggleBookmark(1)"
+              >
+                ☆ Bookmark
+              </button>
             </div>
           </div>
         </div>
