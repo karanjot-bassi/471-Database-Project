@@ -19,7 +19,8 @@ CREATE TABLE Admin (
     First_name VARCHAR(20) NOT NULL,
     Last_name VARCHAR(20) NOT NULL,
     Email VARCHAR(50) NOT NULL,
-    Phone VARCHAR(20) NOT NULL
+    Phone VARCHAR(20) NOT NULL,
+    EPassword VARCHAR(20) NOT NULL
 );
 
 -- Creates table of students in system
@@ -28,28 +29,10 @@ CREATE TABLE Student (
     First_name VARCHAR(20) NOT NULL,
     Last_name VARCHAR(20) NOT NULL,
     Phone VARCHAR(20) NOT NULL,
-    Account_balance DECIMAL(10, 2) NOT NULL,
     Employee_id CHAR(8),
+    SPassword VARCHAR(20) NOT NULL,
 FOREIGN KEY (Employee_id) REFERENCES Admin(Employee_id)
 ON DELETE SET NULL
-);
-
-CREATE TABLE Student_logins (
-	Student_id CHAR(8),
-    SUsername CHAR(16) PRIMARY KEY NOT NULL,
-    SPassword CHAR(16) NOT NULL,
-CONSTRAINT SUser
-	UNIQUE (SUsername),
-FOREIGN Key (Student_id) REFERENCES Student(Student_id)
-);
-
-CREATE TABLE Admin_logins (
-	Admin_id CHAR(8),
-    AUsername CHAR(16) PRIMARY KEY NOT NULL,
-    APassword CHAR(16) NOT NULL,
-CONSTRAINT AUser
-	UNIQUE (AUsername),
-FOREIGN Key (Admin_id) REFERENCES Admin(Employee_id)
 );
 
 -- Creates table of student payment info
@@ -104,7 +87,7 @@ CASCADE
 CREATE TABLE Bookings (
     Booking_id CHAR(6) PRIMARY KEY,
     Booking_date DATE NOT NULL,
-    Booking_duration VARCHAR(8) NOT NULL,
+    time VARCHAR(8) NOT NULL,
     Employee_id CHAR(8) NOT NULL,
     Location_id CHAR(4) NOT NULL,
     Student_id CHAR(8) NOT NULL,
@@ -124,20 +107,10 @@ CREATE TABLE Equipment (
 );
 
 -- Creates a table of all the rentable equipment
-CREATE TABLE Rentable (
-    Equipment_id CHAR(4) NOT NULL,
+CREATE TABLE Rentable_equipment (
+    REquipment_id CHAR(4) PRIMARY KEY,
     Rent_price DECIMAL(7, 2) NOT NULL,
-    Max_duration VARCHAR(10) NOT NULL,
-FOREIGN KEY (Equipment_id) REFERENCES Equipment (Equipment_id) ON DELETE
-CASCADE
-);
-
--- Creates a table of all the buyable equipment
-CREATE TABLE Buyable (
-    Equipment_id CHAR(4) NOT NULL,
-    Purchase_price DECIMAL(7, 2) NOT NULL,
-FOREIGN KEY (Equipment_id) REFERENCES Equipment (Equipment_id) ON DELETE
-CASCADE
+    Max_duration VARCHAR(10) NOT NULL
 );
 
 -- Creates a table of all equpiment rentals by students
@@ -150,7 +123,7 @@ CREATE TABLE Equipment_rental (
     Pickup_date DATE NOT NULL,
     Expected_return_date DATE,
     Actual_return_date DATE,
-FOREIGN KEY (Equipment_id) REFERENCES Equipment(Equipment_id) ON DELETE
+FOREIGN KEY (Equipment_id) REFERENCES Rentable_equipment(REquipment_id) ON DELETE
 CASCADE,
 FOREIGN KEY (Student_id) REFERENCES Student(Student_id) ON DELETE
 CASCADE
@@ -160,32 +133,19 @@ CASCADE
 
 /* Beginning of sample data */
 -- Admin sample data
-INSERT INTO Admin (Employee_id, First_name, Last_name, Email, Phone) VALUES
-    ('A0000001', 'Admin', 'Admin', 'admin@ucalgary.ca', '403-100-1000'),
-    ('A0000002', 'Tim', 'Jones', 'johnjones@ucalgary.ca', '403-200-2000'),
-    ('A0000003', 'Sarah', 'John', 'sarahjohn@ucalgary.ca', '403-300-3000'),
-    ('A0000004', 'John', 'Doe', 'johndoe@ucalgary.ca', '403-400-4000');
+INSERT INTO Admin (Employee_id, First_name, Last_name, Email, Phone, EPassword) VALUES
+    ('A0000001', 'Admin', 'Admin', 'admin@ucalgary.ca', '403-100-1000', 'red'),
+    ('A0000002', 'Tim', 'Jones', 'johnjones@ucalgary.ca', '403-200-2000', 'orange'),
+    ('A0000003', 'Sarah', 'John', 'sarahjohn@ucalgary.ca', '403-300-3000', 'yellow'),
+    ('A0000004', 'John', 'Doe', 'johndoe@ucalgary.ca', '403-400-4000', 'green');
 
 -- Student sample data
-INSERT INTO Student (Student_id, First_name, Last_name, Phone, Account_balance) VALUES 
-    ('S0011001', 'Lebron', 'James', '000-000-0000', 0.00),
-    ('S0011002', 'Lionel', 'Messi', '111-111-1111', 0.00),
-    ('S0011003', 'Derrick', 'Rose', '222-222-2222', 0.00),
-    ('S0011004', 'Cristiano', 'Ronaldo', '333-333-3333', 0.00),
-    ('S0011005', 'DeMar', 'DeRozan', '444-444-4444', 0.00);
-
-INSERT INTO Admin_logins (Admin_id, AUsername, APassword) VALUES
-    ('A0000001', 'Admin', 'Admin'),
-    ('A0000002', 'Tim', 'Jones'),
-    ('A000003', 'Sarah', 'John'),
-    ('A000004', 'John', 'Doe');
-    
-INSERT INTO Student_logins (Student_id, SUsername, SPassword) VALUES
-	('S0011001', 'Lebron', 'James'),
-    ('S0011002', 'Lionel', 'Messi'),
-    ('S0011003', 'Derrick', 'Rose'),
-    ('S0011004', 'Cristiano', 'Ronaldo'),
-    ('S0011005', 'DeMar', 'DeRozan');
+INSERT INTO Student (Student_id, First_name, Last_name, Phone, SPassword) VALUES 
+    ('S0011001', 'Lebron', 'James', '000-000-0000', 'blue'),
+    ('S0011002', 'Lionel', 'Messi', '111-111-1111', 'purple'),
+    ('S0011003', 'Derrick', 'Rose', '222-222-2222', 'red'),
+    ('S0011004', 'Cristiano', 'Ronaldo', '333-333-3333', 'orange'),
+    ('S0011005', 'DeMar', 'DeRozan', '444-444-4444', 'yellow');
 
 -- Equipment sample data
 INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, Sport_category)VALUES
@@ -205,21 +165,14 @@ INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, 
     ('E020', 'Volleyball', 'Mikasa (NEW)', 15, 'Volleyball');
     
 -- Rentable equipment sample data
-INSERT INTO Rentable (Equipment_id, Rent_price, Max_duration) VALUES
-    ('E001', 0.00, '1 day'),
-    ('E002', 0.00, '1 day'),
-    ('E003', 0.00, '1 day'),
-    ('E004', 2.00, '1 day'),
-    ('E005', 2.00, '1 day'),
-    ('E007', 40.00, '1 day'),
-    ('E008', 30.00, '1 day');
-
--- Buyable equipment sample data
-INSERT INTO Buyable (Equipment_id, Purchase_price) VALUES
-    ('E011', 35.00),
-    ('E014', 60.00),
-    ('E015', 70.00),
-    ('E016', 25.00);
+INSERT INTO Rentable_equipment (REquipment_id, Rent_price, Max_duration) VALUES
+    ('RE01', 0.00, '1 day'),
+    ('RE02', 0.00, '1 day'),
+    ('RE03', 0.00, '1 day'),
+    ('RE04', 2.00, '1 day'),
+    ('RE05', 2.00, '1 day'),
+    ('RE07', 40.00, '1 day'),
+    ('RE08', 30.00, '1 day');
 
 -- Location sample data
 INSERT INTO Location (Location_id, Name) VALUES
@@ -232,34 +185,34 @@ INSERT INTO Location (Location_id, Name) VALUES
     ('L007', 'Courts');
 
 -- Bookings sample data
-INSERT INTO Bookings (Booking_id, Booking_date, Booking_duration, Employee_id, Location_id, Student_id) VALUES
-	('B00001', 2023-10-05, 2 , 'A0000001', 'L007', 'S0011003'),
-	('B00002', 2023-10-07, 2 , 'A0000001', 'L005', 'S0011002'),
-	('B00003', 2023-10-18, 2 , 'A0000002', 'L007', 'S0011003');
+INSERT INTO Bookings (Booking_id, Booking_date, time, Employee_id, Location_id, Student_id) VALUES
+	('B00001', '2023-10-05', 2 , 'A0000001', 'L007', 'S0011003'),
+	('B00002', '2023-10-07', 2 , 'A0000001', 'L005', 'S0011002'),
+	('B00003', '2023-10-18', 2 , 'A0000002', 'L007', 'S0011003');
 
 -- Program sample data
 INSERT INTO Program 
 	(Program_id, Price, Name, Start_date, End_date, Available_slots, Description, Location_id)
     VALUES
-	('P001', 150.00, '3v3 Ball', 2023-09-9, 2023-12-6, 45, '3 on 3
-	Basketball tournament', 'Gold Gym'),
-	('P002', 50.00, 'Swim Lessons', 2023-10-5, 2023-10-12, 30,
-	'Beginner Lessons', 'Swimming Center'),
-	('P003', 5.00, 'Bouldering', 2023-11-09, 2023-11-09, 25, 'Group 
-    Bouldering', 'Bouldering Wall'),
-	('P004', 80.00, 'Gym Training', 2023-01-07, 2023-04-06, 45,
-	'Group Training', 'Weight Gym'),
-	('P005', 15.00, 'Badminton', 2023-11-01, 2023-12-06, 45, NULL,
-	'Red Gym'),
-	('P006', 165.00, 'Volleyball', 2023-09-9, 2023-12-6, 45,
-	'Volleyball tournament', 'Jack Simpson');
+	('P001', 150.00, '3v3 Ball', '2023-09-9', '2023-12-6', 45, '3 on 3
+	Basketball tournament', 'L001'),
+	('P002', 50.00, 'Swim Lessons', '2023-10-5', '2023-10-12', 30,
+	'Beginner Lessons', 'L004'),
+	('P003', 5.00, 'Bouldering', '2023-11-09', '2023-11-09', 25, 'Group 
+    Bouldering', 'L005'),
+	('P004', 80.00, 'Gym Training', '2023-01-07', '2023-04-06', 45,
+	'Group Training', 'L006'),
+	('P005', 15.00, 'Badminton', '2023-11-01', '2023-12-06', 45, NULL,
+	'L002'),
+	('P006', 165.00, 'Volleyball', '2023-09-9', '2023-12-6', 45,
+	'Volleyball tournament', 'L003');
 
 -- Equipment rental sample data
 INSERT INTO Equipment_rental (Equipment_id, Student_id, RentalID, Item_amt, Rental_date, Pickup_date, Expected_return_date, Actual_return_date)VALUES
-	('E001', 'S0011001', 'R00001', 1, 2023-09-13, 2023-09-13, 2023-09-13, 2023-09-13),
-	('E002', 'S0011001', 'R00011', 1, 2023-09-14, 2023-09-14, 2023-09-14, 2023-09-15),
-	('E001', 'S0011002', 'R00111', 2, 2023-12-04, 2023-12-04, NULL, NULL),
-	('E001', 'S0011001', 'R01111', 1, 2023-12-04, 2023-12-04, NULL, NULL);
+	('RE01', 'S0011001', 'R00001', 1, '2023-09-13', '2023-09-13', '2023-09-13', '2023-09-13'),
+	('RE02', 'S0011001', 'R00011', 1, '2023-09-14', '2023-09-14', '2023-09-14', '2023-09-15'),
+	('RE01', 'S0011002', 'R00111', 2, '2023-12-04', '2023-12-04', NULL, NULL),
+	('Re01', 'S0011001', 'R01111', 1, '2023-12-04', '2023-12-04', NULL, NULL);
 
 -- Program registration sample data
 INSERT INTO Registers_for (Student_id, Program_id) VALUES
