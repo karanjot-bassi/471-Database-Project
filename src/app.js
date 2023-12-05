@@ -43,6 +43,10 @@ app.get('/studentLU', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/studentLU.html'));
 })
 
+app.get('/buy', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pages/buy.html'));
+})
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
