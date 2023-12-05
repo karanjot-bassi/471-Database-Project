@@ -175,10 +175,17 @@ INSERT INTO Student (Student_id, First_name, Last_name, Phone, Account_balance) 
     ('S0011005', 'DeMar', 'DeRozan', '444-444-4444', 0.00);
 
 INSERT INTO Admin_logins (Admin_id, AUsername, APassword) VALUES
-    ();
+    ('A0000001', 'Admin', 'Admin'),
+    ('A0000002', 'Tim', 'Jones'),
+    ('A000003', 'Sarah', 'John'),
+    ('A000004', 'John', 'Doe');
     
 INSERT INTO Student_logins (Student_id, SUsername, SPassword) VALUES
-	();
+	('S0011001', 'Lebron', 'James'),
+    ('S0011002', 'Lionel', 'Messi'),
+    ('S0011003', 'Derrick', 'Rose'),
+    ('S0011004', 'Cristiano', 'Ronaldo'),
+    ('S0011005', 'DeMar', 'DeRozan');
 
 -- Equipment sample data
 INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, Sport_category)VALUES
