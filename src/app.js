@@ -1,22 +1,81 @@
+/*
+
+Resources : 
+1) help with setting up the login(connection to database) :  https://www.youtube.com/watch?v=Mn0rdbJPWEo 
+2) HELP WITH CHECKING AND AUTH
+*/
+
 const express = require('express');
+const session = require('express-session');
 const path = require('path');
 const app = express();
-const connection = require('./db');
+
+
+//const connection = require('./db');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+var mysql = require("mysql2");
+
+var connection = mysql.createConnection({
+    host: 'localhost',
+    database: 'UniSports',
+    user: 'root',
+    //password: 'Uniting481fall'
+    password:'marwane123'
+});
+
+
+
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
 
 
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-// const sendFileHandler = (req, res) => {
-//     const pageName = req.params.page || 'index';
-//     res.sendFile(path.join(__dirname, `pages/${pageName}.html`));
-// };
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/index.html'));
 })
 
-// app.get('/:page', sendFileHandler);
+app.post('/shome', (req, res) =>{
+
+    let username = req.body.username;
+	let password = req.body.password;
+
+    // for testing purposes 
+    //console.log("captured", username);
+    // console.log("captured", password);
+
+
+    if (username && password) {
+		// GET THE SQL QUERY DATA
+		connection.query('SELECT * FROM student WHERE Student_id = ? AND Spassword = ?', [username, password], function(error, results, fields) {
+			// If there is an issue with the query, output the error
+			if (error) throw error;
+			// If the account exists
+			if (results.length > 0) {
+				// Authenticate the user
+				req.session.loggedin = true;
+				req.session.password = password;
+				// Redirect to home page
+				res.redirect('shome');
+			} else {
+				res.send('Incorrect Username and/or Password!');
+			}			
+		});
+	} else {
+		res.send('Please enter Username and Password!');
+		res.end();
+	}
+
+});
 
 
 app.get('/shome', (req, res) => {

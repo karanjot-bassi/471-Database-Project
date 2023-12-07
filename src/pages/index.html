@@ -53,17 +53,18 @@
     </div>
 
     <div class="container border">
-      <form id="signin" action="/shome" method="get">
+      <form id="signin" action="/shome" method="post">
         <div class="mb-3">
           <label for="signinemail" class="form-label"
             >Email address</label
           >
-          <input type="email" class="form-control" id="signinemail" />
+          <input type="username" name="username" class="form-control" id="signinemail" />
         </div>
         <div class="mb-3">
           <label for="signinpassword" class="form-label">Password</label>
-          <input type="password" class="form-control" id="signinpassword" />
+          <input type="password" name= "password" class="input_field" id="signinpassword" />
         </div>
+        <!-- test for student_id -->
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
