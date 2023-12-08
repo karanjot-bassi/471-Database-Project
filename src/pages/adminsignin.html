@@ -51,14 +51,14 @@
     </div>
 
     <div class="container border">
-      <form id="signin" action="/adminhome" method="get">
+      <form id="signin" action="/adminhome" method="post">
         <div class="mb-3">
           <label for="adminsigninemail" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="adminsigninemail" />
+          <input type="email" name= "username" class="input-field" id="adminsigninemail" />
         </div>
         <div class="mb-3">
           <label for="adminsigninpass" class="form-label">Password</label>
-          <input type="password" class="form-control" id="adminsigninpass" />
+          <input type="password" name= "password" class="form-control" id="adminsigninpass" />
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

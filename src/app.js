@@ -44,6 +44,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/index.html'));
 })
 
+// for student 
 app.post('/shome', (req, res) =>{
 
     let username = req.body.username;
@@ -52,7 +53,6 @@ app.post('/shome', (req, res) =>{
     // for testing purposes 
     //console.log("captured", username);
     // console.log("captured", password);
-
 
     if (username && password) {
 		// GET THE SQL QUERY DATA
@@ -78,6 +78,11 @@ app.post('/shome', (req, res) =>{
 });
 
 
+// for admin : 
+
+
+
+
 app.get('/shome', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/shome.html'));
 })
@@ -101,6 +106,43 @@ app.get('/programs', (req, res) => {
 app.get('/adminsignin', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/adminsignin.html'));
 })
+
+
+app.post('/adminhome', (req, res) =>{
+
+    let username = req.body.username;
+	let password = req.body.password;
+
+    // for testing purposes 
+    //console.log("captured", username);
+    //console.log("captured", password);
+
+    if (username && password) {
+		// GET THE SQL QUERY DATA
+		connection.query('SELECT * FROM Admin WHERE email = ? AND Epassword = ?', [username, password], function(error, results, fields) {
+
+
+            // for testing 
+            //console.log("captured", results);
+			// If there is an issue with the query, output the error
+			if (error) throw error;
+			// If the account exists
+			if (results.length > 0) {
+				// Authenticate the user
+				req.session.loggedin = true;
+				req.session.password = password;
+				// Redirect to home page
+				res.redirect('adminhome');
+			} else {
+				res.send('Incorrect Username and/or Password!');
+			}			
+		});
+	} else {
+		res.send('Please enter Username and Password!');
+		res.end();
+	}
+
+});
 
 app.get('/adminhome', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/adminhome.html'));
