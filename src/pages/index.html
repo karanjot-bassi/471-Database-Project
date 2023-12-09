@@ -25,45 +25,35 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="container mt-4 mb-4 text-center">
+    <div class="pageHeaders">
       <div>
-        <h1>Active Living</h1>
+        <h1>Uni Sports</h1>
       </div>
       <div>
         <p>
-          Welcome to the active living website. Here you can easily making
-          equipment rentals, join programs and much more!
+          Welcome to the Uni Sports. Here you can easily make equipment
+          rentals, join programs and much more!
         </p>
       </div>
     </div>
 
-    <div class="container">
+    <div id="choose-user">
       <ul class="nav nav-underline">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/"
-            >Student Login-in</a
-          >
+          <a class="nav-link active" aria-current="page" href="/">Student</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/adminsignin"
-            >Admin Login-in</a
-          >
+          <a class="nav-link" aria-current="page" href="/adminsignin">Admin</a>
         </li>
       </ul>
     </div>
 
-    <div class="container border">
+    <div id="login-box">
       <form id="signin" action="/shome" method="post">
-        <div class="mb-3">
-          <label for="signinemail" class="form-label"
-            >Email address</label
-          >
-          <input type="username" name="username" class="form-control" id="signinemail" />
-        </div>
-        <div class="mb-3">
-          <label for="signinpassword" class="form-label">Password</label>
-          <input type="password" name= "password" class="input_field" id="signinpassword" />
-        </div>
+        <label for="signinemail" class="form-label">Student ID</label>
+        <input type="text" name="username" id="signinemail" />
+        <label for="signinpassword" class="form-label">Password</label>
+        <input type="password" name="password" id="signinpassword" />
         <!-- test for student_id -->
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

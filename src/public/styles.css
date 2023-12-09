@@ -4,6 +4,11 @@
   --bs-primary: #2067f5;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 h1,
 h2,
 h3,
@@ -14,6 +19,89 @@ h6 {
   font-weight: 600;
 }
 
+.pageHeaders {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 16px auto;
+}
+
+#pageDescription {
+  font-size: 20px;
+}
+
 .input-group {
   padding-left: 100px;
 }
+
+#choose-user {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px auto;
+}
+
+#login-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 0px auto;
+  margin-top: 8px;
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+}
+
+#login-box form {
+  width: 100%;
+}
+
+#login-box label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+#login-box input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+#home-tables {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+#home-tables table {
+  margin-bottom: 48px;
+}
+
+#regular-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+#regular-card {
+  width: 18rem;
+  margin: 15px;
+}
+
+#book-cards {
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  margin: 0px auto;
+}
+
+#book-card {
+  margin-bottom: 8px;
+}
+
+
+
+

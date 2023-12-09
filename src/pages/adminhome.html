@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Active Living | Admin Home</title>
+    <title>Uni Sports | Admin Home</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -29,7 +29,7 @@
     <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/adminhome">Active Living | Admin Home</a>
+        <a class="navbar-brand" href="/adminhome">Uni Sports | Admin Home</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -68,38 +68,48 @@
       </div>
     </nav>
 
-    <div>
-      <p>
-        Welcome _ to admin home page. Here you can see upcoming events for
-        students and student rentals
+    <div class="pageHeaders">
+      <p id="pageDescription">
+        Welcome to the Admin page, Here you can see what students books and
+        student rentals.
       </p>
     </div>
 
-    <div class="container px-4 mt-5">
-      <h2 class="mt-5">Upcoming Events</h2>
+    <div id="home-tables">
+      <h2>Student Rentals</h2>
       <table class="table">
         <thead class="table-light">
           <th>Student</th>
-          <th>Event</th>
+          <th>Rented Item</th>
+          <th>Expected Return</th>
+          <th>Actual Return</th>
+          <th>Returned</th>
+        </thead>
+        <tbody>
+          <th>Lebron James</th>
+          <th>Ball</th>
+          <th>2023-09-09</th>
+          <th></th>
+          <th>No</th>
+        </tbody>
+      </table>
+
+      <h2>Bookings</h2>
+      <table class="table">
+        <thead class="table-light">
+          <th>Student</th>
+          <th>Booking</th>
           <th>Date</th>
           <th>Time</th>
-          <th>Confirmed</th>
+          <th></th>
         </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-
-    <div class="container px-4 mt-5">
-      <h2 class="mt-5">Student Rentals</h2>
-      <table class="table">
-        <thead class="table-light">
-          <th>Student</th>
-          <th>Item</th>
-          <th>Date Expected</th>
-          <th>Returned</th>
-          <th>Actual Return</th>
-        </thead>
-        <tbody></tbody>
+        <tbody>
+          <th>Lebron James</th>
+          <th>Squash Court</th>
+          <th>2023-09-09</th>
+          <th>2:00pm</th>
+          <th><button>Cancel</button></th>
+        </tbody>
       </table>
     </div>
 
