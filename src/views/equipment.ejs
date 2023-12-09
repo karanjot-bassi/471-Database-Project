@@ -81,16 +81,22 @@
       </p>
     </div>
 
-    <div id="regular-cards">
+    <link rel="stylesheet" href="stylesEq.css">
+    <div id="regular-cards" class="row row-cols-1 row-cols-md-3 g-4">
       <!-- The loop to dynamically create cards based on the fetched data -->
       <% equipmentData.forEach(item => { %>
-        <div class="card" id="regular-card">
-          <div class="card-body">
-            <h5 class="card-title"><%= item.Name %></h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary"><%= item.Sport_category %></h6>
-            <a href="#" class="card-link">Rent</a>
+          <div class="col">
+              <div class="card h-100 nike-card">
+                  
+                  <div class="card-body">
+                      <h5 class="card-title"><%= item.Name %></h5>
+                      <p class="card-text"><%= item.Equipment_description %></p>
+                      <p class="card-text">Category: <%= item.Sport_category %></p>
+                      <p class="card-text">Stock: <%= item.Amt_in_stock %></p>
+                      <a href="#" class="btn btn-primary">Shop Now</a>
+                  </div>
+              </div>
           </div>
-        </div>
       <% }); %>
     </div>
     <!-- Bootstrap JavaScript Libraries -->

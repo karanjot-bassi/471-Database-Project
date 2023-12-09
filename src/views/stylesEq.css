@@ -1,0 +1,9 @@
+.nike-card {
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.nike-card:hover {
+    transform: scale(1.05);
+}

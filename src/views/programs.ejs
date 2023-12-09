@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Uni Sport | Equipment</title>
+    <title>Uni Sports | Programs</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -29,7 +29,7 @@
     <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/shome">Uni Sport</a>
+        <a class="navbar-brand" href="/shome">Uni Sports</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -50,13 +50,13 @@
               <a class="nav-link" aria-current="page" href="/shome">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/equipment">Equipment</a>
+              <a class="nav-link" href="/equipment">Equipment</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/book">Book</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/programs">Programs</a>
+              <a class="nav-link active" href="/programs">Programs</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/settings">Settings</a>
@@ -74,25 +74,25 @@
     </nav>
 
     <div class="pageHeaders">
-      <h1>Equipment</h1>
-      <p>
-        Here you can Purchase or Rent equipment. Note some items can be rented
-        and purchased and some may only be purchasable
-      </p>
+      <h1>Programs</h1>
+      <p>Here you can view and enroll in available programs.</p>
     </div>
 
-    <div id="regular-cards">
+    <div id="regular-cards" class="row row-cols-1 row-cols-md-3 g-4">
       <!-- The loop to dynamically create cards based on the fetched data -->
-      <% equipmentData.forEach(item => { %>
-        <div class="card" id="regular-card">
-          <div class="card-body">
-            <h5 class="card-title"><%= item.Name %></h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary"><%= item.Sport_category %></h6>
-            <a href="#" class="card-link">Rent</a>
+      <% ProgramsData.forEach(item => { %>
+          <div class="col">
+              <div class="card h-100 nike-card">
+                  
+                  <div class="card-body">
+                      <h5 class="card-title"><%= item.Name %></h5>
+                      <a href="#" class="btn btn-primary">Register NOW</a>
+                  </div>
+              </div>
           </div>
-        </div>
       <% }); %>
     </div>
+
     <!-- Bootstrap JavaScript Libraries -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

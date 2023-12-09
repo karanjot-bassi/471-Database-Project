@@ -8,7 +8,12 @@ Resources :
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const ejs = require('ejs');
+
+
 const app = express();
+app.set('view engine', 'ejs');
+
 
 
 //const connection = require('./db');
@@ -19,12 +24,14 @@ app.use(express.urlencoded({ extended: true }));
 
 var mysql = require("mysql2");
 
+
+// connect to the database 
 var connection = mysql.createConnection({
     host: 'localhost',
     database: 'UniSports',
     user: 'root',
-    password: 'Uniting481fall'
-    //password:'marwane123'
+    //password: 'Uniting481fall'
+    password:'marwane123'
 });
 
 
@@ -91,17 +98,44 @@ app.get('/settings', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/settings.html'));
 })
 
+
+app.set('views', path.join(__dirname, 'views'));
 app.get('/equipment', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/equipment.html'));
-})
+	connection.query('SELECT * FROM Equipment', (error, results, fields) => {
+	  if (error) {
+		console.error('Error fetching equipment data from MySQL:', error);
+		res.status(500).send('Internal Server Error');
+		return;
+	  }
+	  //const equipmentData = results; // Assuming results is an array of equipment items
+	  const equipmentData = results;
+	  // Render the template with the data
+	  res.render('equipment', { equipmentData });
+	});
+});
+
 
 app.get('/book', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/book.html'));
 })
 
+
+app.set('views', path.join(__dirname, 'views'));
 app.get('/programs', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/programs.html'));
-})
+	connection.query('SELECT * FROM Program', (error, results, fields) => {
+		if (error) {
+		console.error('Error fetching equipment data from MySQL:', error);
+		res.status(500).send('Internal Server Error');
+		return;
+		}
+		//const equipmentData = results; // Assuming results is an array of equipment items
+		const ProgramsData = results;
+		// Render the template with the data
+		res.render('programs', { ProgramsData });
+	});
+});
+
+
 
 app.get('/adminsignin', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/adminsignin.html'));
