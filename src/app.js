@@ -30,8 +30,9 @@ var connection = mysql.createConnection({
     host: 'localhost',
     database: 'UniSports',
     user: 'root',
-    password: 'Uniting481fall'
+    //password: 'Uniting481fall'
     //password:'marwane123'
+	password: 'root'
 });
 
 
@@ -115,9 +116,25 @@ app.get('/equipment', (req, res) => {
 });
 
 
+
+/*
 app.get('/book', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/book.html'));
-})
+})*/
+
+app.set('views', path.join(__dirname, 'views'));
+app.get('/book', (req, res) => {
+	connection.query('SELECT * FROM Location', (error, results, fields) => {
+	  if (error) {
+		console.error('Error fetching location data from MySQL:', error);
+		res.status(500).send('Internal Server Error');
+		return;
+	  }
+	  const locationData = results;
+	  // Render the template with the data
+	  res.render('book', { locationData });
+	});
+});
 
 
 app.set('views', path.join(__dirname, 'views'));

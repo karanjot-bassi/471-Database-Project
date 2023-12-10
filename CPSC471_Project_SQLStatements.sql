@@ -98,11 +98,12 @@ CASCADE
 );
 
 -- Creates a table of the equipment inventory
-CREATE TABLE Equipment (
+CREATE TABLE Equipment(
     Equipment_id CHAR(4) PRIMARY KEY,
     Name VARCHAR(20) NOT NULL,
     Equipment_description TEXT,
     Amt_in_stock INT NOT NULL,
+    Price DECIMAL(7,2) NOT NULL,
     Sport_category VARCHAR(50)
 );
 
@@ -148,21 +149,21 @@ INSERT INTO Student (Student_id, First_name, Last_name, Phone, SPassword) VALUES
     ('S0011005', 'DeMar', 'DeRozan', '444-444-4444', 'yellow');
 
 -- Equipment sample data
-INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, Sport_category)VALUES
-    ('E001', 'Ball', 'Wilson Ball', 15, 'Basketball'),
-    ('E011', 'Ball', 'Wilson Ball (NEW)', 25, 'Basketball'),
-    ('E002', 'Ball', 'Spalding Ball', 10, 'Basketball'),
-    ('E003', 'Ball', 'Adidas Ball', 15, 'Soccer'),
-    ('E004', 'Squash racquet', 'Wilson', 20, 'Squash'),
-    ('E014', 'Squash racquet', 'Wilson (NEW)', 35, 'Squash'),
-    ('E005', 'Tennis racquet', 'Wilson', 15, 'Tennis'),
-    ('E015', 'Tennis racquet', 'Wilson (NEW)', 40, 'Tennis'),
-    ('E016', 'Goggles', 'Swimming Goggles', 50, 'Swimming'),
-    ('E009', 'Flippers', 'Speedo', 30, 'Swimming'),
-    ('E007', 'Bike', 'Mountain Bike', 50, 'Cycling'),
-    ('E008', 'Bike', 'Road Bike', 50, 'Cycling'),
-    ('E010', 'Volleyball', 'Mikasa', 15, 'Volleyball'),
-    ('E020', 'Volleyball', 'Mikasa (NEW)', 15, 'Volleyball');
+INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, Price, Sport_category)VALUES
+    ('E001', 'Ball', 'Wilson Ball', 15, 60.00, 'Basketball'),
+    ('E011', 'Ball', 'Wilson Ball (NEW)', 25, 75.00, 'Basketball'),
+    ('E002', 'Ball', 'Spalding Ball', 10, 45.00, 'Basketball'),
+    ('E003', 'Ball', 'Adidas Ball', 15, 30.00, 'Soccer'),
+    ('E004', 'Squash racquet', 'Wilson', 20, 120.00, 'Squash'),
+    ('E014', 'Squash racquet', 'Wilson (NEW)', 35, 150.00, 'Squash'),
+    ('E005', 'Tennis racquet', 'Wilson', 15, 125.00, 'Tennis'),
+    ('E015', 'Tennis racquet', 'Wilson (NEW)', 40, 145.00, 'Tennis'),
+    ('E016', 'Goggles', 'Swimming Goggles', 50, 20.00, 'Swimming'),
+    ('E009', 'Flippers', 'Speedo', 30, 75.00, 'Swimming'),
+    ('E007', 'Bike', 'Mountain Bike', 50, 1200, 'Cycling'),
+    ('E008', 'Bike', 'Road Bike', 50, 1500.00, 'Cycling'),
+    ('E010', 'Volleyball', 'Mikasa', 15, 80.00, 'Volleyball'),
+    ('E020', 'Volleyball', 'Mikasa (NEW)', 15, 120.00, 'Volleyball');
     
 -- Rentable equipment sample data
 INSERT INTO Rentable_equipment (REquipment_id, Rent_price, Max_duration) VALUES
@@ -178,7 +179,7 @@ INSERT INTO Rentable_equipment (REquipment_id, Rent_price, Max_duration) VALUES
 INSERT INTO Location (Location_id, Name) VALUES
     ('L001', 'Gold Gym'),
     ('L002', 'Red Gym'),
-    ('L003', 'Jack simpson Gym'),
+    ('L003', 'Jack Simpson Gym'),
     ('L004', 'Swimming Center'),
     ('L005', 'Bouldering Wall'),
     ('L006', 'Weight Gym'),

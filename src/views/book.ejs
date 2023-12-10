@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Uni Card | Book</title>
+    <title>Uni Sport | Book</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -29,7 +29,7 @@
     <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/shome">Uni Card</a>
+        <a class="navbar-brand" href="/shome">Uni Sport</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -50,10 +50,10 @@
               <a class="nav-link" aria-current="page" href="/shome">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/equipment">Equipment</a>
+              <a class="nav-link active" href="/equipment">Equipment</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/book">Book</a>
+              <a class="nav-link" href="/book">Book</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/programs">Programs</a>
@@ -76,19 +76,53 @@
     <div class="pageHeaders">
       <h1>Book</h1>
       <p>
-        Here you can Book courts and more.
+      Here you can Book courts and other locations.
       </p>
     </div>
 
-    <div id="book-cards">
-      <div class="card" id="book-card">
+    <div id="regular-cards">
+      <!-- The loop to dynamically create cards based on the fetched data -->
+      <% locationData.forEach(item => { %>
+      <div class="card" id="regular-card">
         <div class="card-body">
-          <h5 class="card-title">Squash Courts</h5>
-          <a href="#" class="card-link">Book</a>
+          <h5 class="card-title"><%= item.Name %></h5>
+          <a
+            href="#"
+            class="btn btn-primary"
+            onclick="showConfirmationSign('<%= item.Name %>')"
+            >Book</a>
         </div>
       </div>
+      <% }); %>
     </div>
 
+    <div id="confirmationSign">
+      <h2>Confirm Booking</h2>
+      <p>
+        Are you sure you want to book <span id="confirmationItem"></span>?
+      </p>
+      <button onclick="confirmBooking()">Confirm</button>
+      <button onclick="closeBooking()">Cancel</button>
+    </div>
+
+    <script>
+      function showConfirmationSign(itemName) {
+        var confirmationSign = document.getElementById("confirmationSign");
+        var confirmationItem = document.getElementById("confirmationItem");
+
+        confirmationItem.innerHTML = itemName;
+        confirmationSign.style.display = "block";
+      }
+
+      function confirmBooking() {
+        alert("Booking Confirmed!");
+        closeBooking();
+      }
+      function closeBooking() {
+        var confirmationSign = document.getElementById("confirmationSign");
+        confirmationSign.style.display = "none";
+      }
+    </script>
 
     <!-- Bootstrap JavaScript Libraries -->
     <script
