@@ -86,12 +86,48 @@
                   
                   <div class="card-body">
                       <h5 class="card-title"><%= item.Name %></h5>
-                      <a href="#" class="btn btn-primary">Register NOW</a>
+                      <p class = "card-text"> Date: <%= item.Start_date %></p>
+                      <p class = "card-text"> Open spots: <%= item.Availableslots %></p>
+                      <p class = "card-text"> Price: <%= item.Price %></p>
+                      <a
+                        href="#"
+                        class="btn btn-primary"
+                        onclick="showConfirmationSign('<%= item.Name %>')"
+                        >Register NOW</a
+                      >
                   </div>
               </div>
           </div>
       <% }); %>
     </div>
+
+    <div id="confirmationSign">
+      <h2>Confirm Program Attendance</h2>
+      <p>
+        Are you sure you want to register for <span id="confirmationItem"></span>?
+      </p>
+      <button onclick="confirmProgram()">Confirm</button>
+      <button onclick="closeProgram()">Cancel</button>
+    </div>
+
+    <script>
+      function showConfirmationSign(itemName) {
+        var confirmationSign = document.getElementById("confirmationSign");
+        var confirmationItem = document.getElementById("confirmationItem");
+
+        confirmationItem.innerHTML = itemName;
+        confirmationSign.style.display = "block";
+      }
+
+      function confirmProgram() {
+        alert("Registration confirmed!");
+        closeBooking();
+      }
+      function closeProgram() {
+        var confirmationSign = document.getElementById("confirmationSign");
+        confirmationSign.style.display = "none";
+      }
+    </script>
 
     <!-- Bootstrap JavaScript Libraries -->
     <script
