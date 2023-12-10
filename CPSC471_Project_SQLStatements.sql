@@ -110,8 +110,12 @@ CREATE TABLE Equipment(
 -- Creates a table of all the rentable equipment
 CREATE TABLE Rentable_equipment (
     REquipment_id CHAR(4) PRIMARY KEY,
-    Rent_price DECIMAL(7, 2) NOT NULL,
-    Max_duration VARCHAR(10) NOT NULL
+    Name VARCHAR(20) NOT NULL,
+    Equipment_description TEXT,
+    Amt_in_stock INT NOT NULL,
+    Price DECIMAL(7,2) NOT NULL,
+    Sport_category VARCHAR(50),
+    Max_duration INT NOT NULL
 );
 
 -- Creates a table of all equpiment rentals by students
@@ -160,20 +164,23 @@ INSERT INTO Equipment (Equipment_id, Name, Equipment_description, Amt_in_stock, 
     ('E015', 'Tennis racquet', 'Wilson (NEW)', 40, 145.00, 'Tennis'),
     ('E016', 'Goggles', 'Swimming Goggles', 50, 20.00, 'Swimming'),
     ('E009', 'Flippers', 'Speedo', 30, 75.00, 'Swimming'),
-    ('E007', 'Bike', 'Mountain Bike', 50, 1200, 'Cycling'),
+    ('E007', 'Bike', 'Mountain Bike', 50, 1200.00, 'Cycling'),
     ('E008', 'Bike', 'Road Bike', 50, 1500.00, 'Cycling'),
     ('E010', 'Volleyball', 'Mikasa', 15, 80.00, 'Volleyball'),
     ('E020', 'Volleyball', 'Mikasa (NEW)', 15, 120.00, 'Volleyball');
     
 -- Rentable equipment sample data
-INSERT INTO Rentable_equipment (REquipment_id, Rent_price, Max_duration) VALUES
-    ('RE01', 0.00, '1 day'),
-    ('RE02', 0.00, '1 day'),
-    ('RE03', 0.00, '1 day'),
-    ('RE04', 2.00, '1 day'),
-    ('RE05', 2.00, '1 day'),
-    ('RE07', 40.00, '1 day'),
-    ('RE08', 30.00, '1 day');
+INSERT INTO Rentable_equipment (REquipment_id, Name, Equipment_description, Amt_in_stock, Price, Sport_category, Max_duration) VALUES
+    ('RE01', 'Ball', 'Wilson Ball', 15, 10.00, 'Basketball', 1),
+    ('RE02', 'Ball', 'Spalding Ball', 10, 10.00, 'Basketball', 1),
+    ('RE03', 'Ball', 'Adidas Ball', 15, 10.00, 'Soccer', 1),
+    ('RE04', 'Squash racquet', 'Wilson', 20, 15.00, 'Squash', 1),
+    ('RE05', 'Tennis racquet', 'Wilson', 15, 15.00, 'Tennis', 1),
+    ('RE16', 'Goggles', 'Swimming Goggles', 50, 5.00, 'Swimming', 1),
+    ('RE09', 'Flippers', 'Speedo', 30, 7.00, 'Swimming', 1),
+    ('RE07', 'Bike', 'Mountain Bike', 50, 50.00, 'Cycling', 7),
+    ('RE08', 'Bike', 'Road Bike', 50, 50.00, 'Cycling', 7),
+    ('RE10', 'Volleyball', 'Mikasa', 15, 10.00, 'Volleyball', 1);
 
 -- Location sample data
 INSERT INTO Location (Location_id, Name) VALUES
@@ -195,7 +202,7 @@ INSERT INTO Bookings (Booking_id, Booking_date, time, Employee_id, Location_id, 
 INSERT INTO Program 
 	(Program_id, Price, Name, Start_date, End_date, Available_slots, Description, Location_id)
     VALUES
-	('P001', 150.00, '3v3 Ball', '2023-09-9', '2023-12-6', 45, '3 on 3
+	('P001', 150.00, '3v3 Basketball', '2023-09-9', '2023-12-6', 45, '3 on 3
 	Basketball tournament', 'L001'),
 	('P002', 50.00, 'Swim Lessons', '2023-10-5', '2023-10-12', 30,
 	'Beginner Lessons', 'L004'),
