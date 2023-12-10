@@ -81,24 +81,55 @@
       </p>
     </div>
 
-    <link rel="stylesheet" href="stylesEq.css">
-    <div id="regular-cards" class="row row-cols-1 row-cols-md-3 g-4">
+    <div id="regular-cards">
       <!-- The loop to dynamically create cards based on the fetched data -->
       <% equipmentData.forEach(item => { %>
-          <div class="col">
-              <div class="card h-100 nike-card">
-                  
-                  <div class="card-body">
-                      <h5 class="card-title"><%= item.Name %></h5>
-                      <p class="card-text"><%= item.Equipment_description %></p>
-                      <p class="card-text">Category: <%= item.Sport_category %></p>
-                      <p class="card-text">Stock: <%= item.Amt_in_stock %></p>
-                      <a href="#" class="btn btn-primary">Shop Now</a>
-                  </div>
-              </div>
-          </div>
+      <div class="card" id="regular-card">
+        <div class="card-body">
+          <h5 class="card-title"><%= item.Name %></h5>
+          <p class="card-text"><%= item.Equipment_description %></p>
+          <p class="card-text">Category: <%= item.Sport_category %></p>
+          <p class="card-text">Stock: <%= item.Amt_in_stock %></p>
+          <a
+            href="#"
+            class="btn btn-primary"
+            onclick="showConfirmationSign('<%= item.Name %>')"
+            >Purchase</a
+          >
+        </div>
+      </div>
+
       <% }); %>
     </div>
+
+    <div id="confirmationSign">
+      <h2>Confirm Purchase</h2>
+      <p>
+        Are you sure you want to purchase <span id="confirmationItem"></span>?
+      </p>
+      <button onclick="confirmPurchase()">Confirm</button>
+      <button onclick="closePurchase()">Cancel</button>
+    </div>
+
+    <script>
+      function showConfirmationSign(itemName) {
+        var confirmationSign = document.getElementById("confirmationSign");
+        var confirmationItem = document.getElementById("confirmationItem");
+
+        confirmationItem.innerHTML = itemName;
+        confirmationSign.style.display = "block";
+      }
+
+      function confirmPurchase() {
+        alert("Purchase Confirmed!");
+        closePurchase();
+      }
+      function closePurchase() {
+        var confirmationSign = document.getElementById("confirmationSign");
+        confirmationSign.style.display = "none";
+      }
+    </script>
+
     <!-- Bootstrap JavaScript Libraries -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
