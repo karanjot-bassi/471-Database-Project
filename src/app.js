@@ -207,6 +207,14 @@ app.get('/buy', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/buy.html'));
 })
 
+function generateHourOptions() {
+	let options = '';
+	for (let hour = 0; hour < 24; hour++) {
+	  options += `<option value="${hour}">${hour}:00</option>`;
+	}
+	return options;
+  }
+
 const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
