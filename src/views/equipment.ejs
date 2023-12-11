@@ -76,11 +76,14 @@
     <div class="pageHeaders">
       <h1>Equipment</h1>
       <p>
-        Here you can Purchase or Rent equipment. Note some items can be rented
-        and purchased and some may only be purchasable
+        Here you can Purchase or Rent equipment.
       </p>
     </div>
-
+    <div class="pageHeaders2">
+      <h1>Purchase</h1>
+      <p>Here is equipment you can purchase</p>
+    </div>
+    <hr>
     <div id="regular-cards">
       <!-- The loop to dynamically create cards based on the fetched data -->
       <% equipmentData.forEach(item => { %>
@@ -102,6 +105,12 @@
 
       <% }); %>
     </div>
+    <hr>
+    <div class="pageHeaders2">
+      <h1>Rent</h1>
+      <p>Here is equipment you can rent</p>
+    </div>
+    <hr>
 
     <div id="confirmationSign">
       <h2>Confirm Purchase</h2>

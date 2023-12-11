@@ -4,9 +4,9 @@ var connection = mysql.createConnection({
     host: 'localhost',
     database: 'unisports',
     user: 'root',
-    //password: 'Uniting481fall'
+    password: 'Uniting481fall'
     //password:'marwane123'
-    password: 'root'
+    //password: 'root'
 });
 
 
