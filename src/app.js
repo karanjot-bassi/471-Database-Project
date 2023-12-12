@@ -102,30 +102,43 @@ app.get('/settings', (req, res) => {
 
 app.set('views', path.join(__dirname, 'views'));
 app.get('/equipment', (req, res) => {
-	var equipmentData = [];
+	let equipmentData;
+	let rentalEquipmentData;
+  
 	connection.query('SELECT * FROM Equipment', (error, results, fields) => {
 	  if (error) {
 		console.error('Error fetching equipment data from MySQL:', error);
 		res.status(500).send('Internal Server Error');
 		return;
 	  }
-	  //const equipmentData = results; // Assuming results is an array of equipment items
-	  equipmentData.push(results);
-	  // Render the template with the data
-	  res.render('equipment', { equipmentData});
-	});/*
-	connection.query('SELECT * FROM Rentable_equipment', (error1, results1, fields) => {
-		if (error1) {
-		  console.error('Error fetching equipment data from MySQL:', error1);
-		  res.status(500).send('Internal Server Error');
-		  return;
-		}
-		//const equipmentData = results; // Assuming results is an array of equipment items
-		equipmentData.push(results1);
-		// Render the template with the data
-	  });
-	  res.render('equipment', { equipmentData});*/
-});
+	  equipmentData = results;
+  
+	  // Check if both queries are complete before rendering the view
+	  if (rentalEquipmentData !== undefined) {
+		renderEquipmentView();
+	  }
+	});
+  
+	connection.query('SELECT * FROM Rentable_equipment', (error, results, fields) => {
+	  if (error) {
+		console.error('Error fetching rental equipment data from MySQL:', error);
+		res.status(500).send('Internal Server Error');
+		return;
+	  }
+	  rentalEquipmentData = results;
+  
+	  // Check if both queries are complete before rendering the view
+	  if (equipmentData !== undefined) {
+		renderEquipmentView();
+	  }
+	});
+  
+	function renderEquipmentView() {
+	  res.render('equipment', { equipmentData, rentalEquipmentData });
+	}
+  });
+
+
 
 
 
