@@ -23,6 +23,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.css" />
+
   </head>
 
   <body>
@@ -150,10 +154,14 @@
     <div id="rentalConfirmationSign">
       <h2>Confirm Rental</h2>
       <p>
-        Please choose a date and range to rent <span id="confirmationRentalItem"></span>.
+        Please choose a date to rent <span id="confirmationRentalItem"></span>.
       </p>
-      <button onclick="confirmRental()">Confirm</button>
-      <button onclick="closeRental()">Cancel</button>
+      <form id="rentalForm">
+        <label for="rentalDate">Select Date:</label>
+        <input type="text" id="rentalDate" name="rentalDate" required>
+        <button type="button" onclick="confirmRental()">Confirm</button>
+        <button type="button" onclick="closeRental()">Cancel</button>
+      </form>
     </div>
 
     <script>
@@ -180,10 +188,25 @@
 
         rentalConfirmationItem.innerHTML = itemName;
         rentalConfirmationSign.style.display = "block";
+
+        // Initialize flatpickr
+        flatpickr("#rentalDate", {
+          mode: "range",
+          dateFormat: "Y-m-d",
+          minDate: "today", // Optional: set the minimum date to today
+        });
       }
 
       function confirmRental() {
-        alert("Rental Confirmed!");
+        var selectedDates = document.getElementById("rentalDate").value;
+
+        // Validate the selected date(s) (you may need additional validation)
+        if (!selectedDates) {
+          alert("Please select a valid date or date range for rental.");
+          return;
+        }
+
+        alert("Rental Confirmed!\nSelected Date(s): " + selectedDates);
         closeRental();
       }
 
