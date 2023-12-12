@@ -96,66 +96,22 @@
     </div>
 
     <div id="confirmationSign">
-      <p>
-        Please select a time block to book the  <span id="confirmationItem"></span>
-        <p>
-      <button onclick="showTimeMenu()">Select Time</button>
-      <button onclick="closeBooking()">Cancel</button>
+      <form action="/action_page.php">
+        <label for="bookingTime">Selection (date and time):</label>
+        <input type="datetime-local" id="bookingTime" name="bookingTime">
+        <input type="submit" value="Submit">
+      </form>
     </div>
 
-    <div id="timeMenu">
-      <select id="hourSelect">
-        <!-- Options for each hour in a day -->
-        ${generateHourOptions()}
-      </select>
-    
-      <button onclick="selectTime()">OK</button>
-    </div>
-      
-    <script>
-      function showConfirmationSign(itemName) {
-        var confirmationSign = document.getElementById("confirmationSign");
-        var confirmationItem = document.getElementById("confirmationItem");
+      <script>
+        function showConfirmationSign(itemName) {
+          var confirmationSign = document.getElementById("confirmationSign");
+          var confirmationItem = document.getElementById("confirmationItem");
 
-        confirmationItem.innerHTML = itemName;
-        confirmationSign.style.display = "block";
-      }
-
-      function confirmBooking() {
-        alert("Booking Confirmed!");
-        closeBooking();
-      }
-
-      function closeBooking() {
-        var confirmationSign = document.getElementById("confirmationSign");
-        confirmationSign.style.display = "none";
-      }
-
-      function generateHourOptions() {
-        let options = '';
-        for (let hour = 0; hour < 24; hour++) {
-          options += `<option value="${hour}">${hour}:00</option>`;
+          confirmationItem.innerHTML = itemName;
+          confirmationSign.style.display = "block";
         }
-        return options;
-      }
-
-      function showTimeMenu() {
-        var timeMenu = document.getElementById('timeMenu');
-        timeMenu.style.display = (timeMenu.style.display === 'block') ? 'none' : 'block';
-      }
-    
-      function selectTime() {
-        var hourSelect = document.getElementById('hourSelect');
-        var selectedHour = hourSelect.options[hourSelect.selectedIndex].text;
-    
-        alert('You selected ' + selectedHour);
-        // You can perform further actions with the selected time here
-    
-        // Hide the menu after selection
-        document.getElementById('timeMenu').style.display = 'none';
-      }
-      
-    </script>
+      </script>
 
     <!-- Bootstrap JavaScript Libraries -->
     <script

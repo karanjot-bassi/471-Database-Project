@@ -93,52 +93,13 @@ app.get('/shome', (req, res) => {
 })
 
 app.get('/settings', (req, res) => {
-    // Assuming you have the user information stored in the session
-    const userData = {
-        name: "John Doe", // Replace with the actual name from the session
-        ucid: "UC12345678" // Replace with the actual UCID from the session
-    };
-
-    res.render('settings', { userData });
-});
-
-
-app.post('/settings', (req, res) => {
-    // Extract user input from the request body
-    const Name_on_card = req.body.Name_on_card;
-    const Card_number = req.body.Card_number;
-    const Card_expire = req.body.Card_expire;
-    const CVV = req.body.CVV;
-
-
-
-    // Assuming you have the user ID stored in the session
-    const Student_id = req.session.Student_id; // Replace with the actual session variable for user ID
-	
-
-
-	console.log("Captured Data:", Name_on_card, Card_number, Card_expire, CVV, Student_id);
-
-    // Update the user's payment information in the database
-    connection.query('UPDATE student_payment_info SET Name_on_card = ?, Card_number = ? , Card_expire = ? , CVV = ? WHERE Student_id = ?', [Name_on_card,Card_number,Card_expire,CVV,Student_id], (error, results) => {
-        if (error) {
-            console.error('Error updating user data in MySQL:', error);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-
-        // Assuming success, you can redirect or render a success page
-
-		console.log("SQL Query:", 'UPDATE student_payment_info SET Name_on_card = ?, Card_number = ? , Card_expire = ? , CVV = ? WHERE Student_id = ?', [Name_on_card, Card_number, Card_expire, CVV, Student_id]);
-        res.redirect('/settings');
-				
-    });
-});
-
+    res.sendFile(path.join(__dirname, 'pages/settings.html'));
+})
 
 
 app.set('views', path.join(__dirname, 'views'));
 app.get('/equipment', (req, res) => {
+	var equipmentData = [];
 	connection.query('SELECT * FROM Equipment', (error, results, fields) => {
 	  if (error) {
 		console.error('Error fetching equipment data from MySQL:', error);
@@ -148,10 +109,21 @@ app.get('/equipment', (req, res) => {
 
 
 	  //const equipmentData = results; // Assuming results is an array of equipment items
-	  const equipmentData = results;
+	  equipmentData.push(results);
 	  // Render the template with the data
-	  res.render('equipment', { equipmentData });
-	});
+	  res.render('equipment', { equipmentData});
+	});/*
+	connection.query('SELECT * FROM Rentable_equipment', (error1, results1, fields) => {
+		if (error1) {
+		  console.error('Error fetching equipment data from MySQL:', error1);
+		  res.status(500).send('Internal Server Error');
+		  return;
+		}
+		//const equipmentData = results; // Assuming results is an array of equipment items
+		equipmentData.push(results1);
+		// Render the template with the data
+	  });
+	  res.render('equipment', { equipmentData});*/
 });
 
 

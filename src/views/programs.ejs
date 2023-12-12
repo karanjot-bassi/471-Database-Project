@@ -86,7 +86,7 @@
         <div class="card-body">
           <h5 class="card-title"><%= item.Name %></h5>
           <p class="card-text">Date: <%= item.Start_date %></p>
-          <p class="card-text">Open spots: <%= item.Availableslots %></p>
+          <p class="card-text">Open spots: <%= item.Available_slots %></p>
           <p class="card-text">Price: <%= item.Price %></p>
           <a
             href="#"
@@ -120,7 +120,7 @@
 
       function confirmProgram() {
         alert("Registration confirmed!");
-        closeBooking();
+        closeProgram();
       }
       function closeProgram() {
         var confirmationSign = document.getElementById("confirmationSign");
