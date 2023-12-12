@@ -126,11 +126,11 @@
             <p class="card-text">Category: <%= item.Sport_category %></p>
             <p class="card-text">Stock: <%= item.Amt_in_stock %></p>
             <p class = "card-text"> Price: <%= item.Price %></p>
-            <p class = "card-text"> Max rental term: <%= item.Max_duration %></p>
+            <p class = "card-text"> Maximum days to rent: <%= item.Max_duration %></p>
             <a
               href="#"
               class="btn btn-primary"
-              onclick="showConfirmationSign('<%= item.Name %>')"
+              onclick="showRentalConfirmationSign('<%= item.Name %>')"
               >Rent</a>
           </div>
         </div>
@@ -146,6 +146,15 @@
       </p>
       <button onclick="confirmPurchase()">Confirm</button>
       <button onclick="closePurchase()">Cancel</button>
+    </div>
+
+    <div id="rentalConfirmationSign">
+      <h2>Confirm Rental</h2>
+      <p>
+        Please choose a date and range to rent <span id="confirmationRentalItem"></span>.
+      </p>
+      <button onclick="confirmRental()">Confirm</button>
+      <button onclick="closeRental()">Cancel</button>
     </div>
 
     <script>
@@ -164,6 +173,24 @@
       function closePurchase() {
         var confirmationSign = document.getElementById("confirmationSign");
         confirmationSign.style.display = "none";
+      }
+
+      function showRentalConfirmationSign(itemName) {
+        var rentalConfirmationSign = document.getElementById("rentalConfirmationSign");
+        var rentalConfirmationItem = document.getElementById("confirmationRentalItem");
+
+        rentalConfirmationItem.innerHTML = itemName;
+        rentalConfirmationSign.style.display = "block";
+      }
+
+      function confirmRental() {
+        alert("Rental Confirmed!");
+        closeRental();
+      }
+
+      function closeRental() {
+        var rentalConfirmationSign = document.getElementById("rentalConfirmationSign");
+        rentalConfirmationSign.style.display = "none";
       }
     </script>
 
