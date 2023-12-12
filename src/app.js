@@ -11,10 +11,14 @@ const path = require('path');
 const ejs = require('ejs');
 
 
+
 const app = express();
 app.set('view engine', 'ejs');
 
 
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //const connection = require('./db');
 
@@ -31,8 +35,8 @@ var connection = mysql.createConnection({
     database: 'unisports',
     user: 'root',
     //password: 'Uniting481fall'
-    //password:'marwane123'
-	password: 'root'
+    password:'marwane123'
+	//password: 'root'
 });
 
 
@@ -86,9 +90,46 @@ app.get('/shome', (req, res) => {
 })
 
 
+
+app.set('views', path.join(__dirname, 'views'));
+
 app.get('/settings', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/settings.html'));
-})
+    // Render the initial settings page
+    res.render('settings'); // 'settings' is the name of your EJS file without the extension
+});
+
+app.post('/settings', (req, res) => {
+    // Extract user input from the form
+    const Name_on_card = req.body.Name_on_card;
+    const Card_number = req.body.Card_number;
+    const Card_expire = req.body.Card_expire;
+    const CVV = req.body.CVV;
+
+
+	const Student_id = req.session.Student_id;
+
+		// FORMATTED DATE : 
+	const rawDate = req.body.Card_expire;
+	const dateArray = rawDate.split('/');
+	const formattedDate = `20${dateArray[1]}-${dateArray[0]}-01`;
+
+	console.log("captured", Name_on_card , Card_number , Card_expire , CVV);
+	    // Validate the input as needed
+
+    // Insert the data into the database (adjust the query accordingly)
+    const insertQuery = 'INSERT INTO student_payment_info (Student_id,Name_on_card, Card_number, Card_expire, CVV) VALUES (?, ?, ?, ?, ?)';
+    connection.query(insertQuery, [Student_id, Name_on_card, Card_number, formattedDate , CVV], (error, results, fields) => {
+        if (error) {
+            console.error('Error inserting data into student_payment_info table:', error);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        // Data inserted successfully
+
+		console.log('SQL Query Results:', results);
+		res.redirect('/settings');
+    });
+});
 
 
 app.set('views', path.join(__dirname, 'views'));
