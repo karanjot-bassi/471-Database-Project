@@ -79,11 +79,14 @@
         Here you can Purchase or Rent equipment.
       </p>
     </div>
+
     <div class="pageHeaders2">
       <h1>Purchase</h1>
       <p>Here is equipment you can purchase</p>
     </div>
+
     <hr>
+
     <div id="regular-cards">
       <!-- The loop to dynamically create cards based on the fetched data -->
       <% equipmentData.forEach(item => { %>
@@ -98,17 +101,39 @@
             href="#"
             class="btn btn-primary"
             onclick="showConfirmationSign('<%= item.Name %>')"
-            >Purchase</a
-          >
+            >Purchase</a>
         </div>
       </div>
-
       <% }); %>
     </div>
+
     <hr>
+
     <div class="pageHeaders2">
       <h1>Rent</h1>
       <p>Here is equipment you can rent</p>
+    </div>
+
+      <div id="regular-cards">
+        <!-- The loop to dynamically create cards based on the fetched data -->
+        <!--
+        <%equipmentData.forEach(item => { %>
+        <div class="card" id="regular-card">
+          <div class="card-body">
+            <h5 class="card-title"><%= item.Name %></h5>
+            <p class="card-text"><%= item.Equipment_description %></p>
+            <p class="card-text">Category: <%= item.Sport_category %></p>
+            <p class="card-text">Stock: <%= item.Amt_in_stock %></p>
+            <p class = "card-text"> Price: <%= item.Price %></p>
+            <p class = "card-text"> Max rental term: <%= item.Max_duration %></p>
+            <a
+              href="#"
+              class="btn btn-primary"
+              onclick="showConfirmationSign('<%= item.Name %>')"
+              >Purchase</a>
+          </div>
+        </div>
+      <% }); %>-->
     </div>
     <hr>
 

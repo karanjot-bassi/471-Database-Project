@@ -30,9 +30,9 @@ var connection = mysql.createConnection({
     host: 'localhost',
     database: 'UniSports',
     user: 'root',
-    password: 'Uniting481fall'
+    //password: 'Uniting481fall'
     //password:'marwane123'
-	//password: 'root'
+	password: 'root'
 });
 
 
@@ -102,6 +102,7 @@ app.get('/settings', (req, res) => {
 
 app.set('views', path.join(__dirname, 'views'));
 app.get('/equipment', (req, res) => {
+	var equipmentData = [];
 	connection.query('SELECT * FROM Equipment', (error, results, fields) => {
 	  if (error) {
 		console.error('Error fetching equipment data from MySQL:', error);
@@ -109,10 +110,21 @@ app.get('/equipment', (req, res) => {
 		return;
 	  }
 	  //const equipmentData = results; // Assuming results is an array of equipment items
-	  const equipmentData = results;
+	  equipmentData.push(results);
 	  // Render the template with the data
-	  res.render('equipment', { equipmentData });
-	});
+	  res.render('equipment', { equipmentData});
+	});/*
+	connection.query('SELECT * FROM Rentable_equipment', (error1, results1, fields) => {
+		if (error1) {
+		  console.error('Error fetching equipment data from MySQL:', error1);
+		  res.status(500).send('Internal Server Error');
+		  return;
+		}
+		//const equipmentData = results; // Assuming results is an array of equipment items
+		equipmentData.push(results1);
+		// Render the template with the data
+	  });
+	  res.render('equipment', { equipmentData});*/
 });
 
 
