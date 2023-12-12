@@ -36,17 +36,13 @@ var connection = mysql.createConnection({
 });
 
 
-
 app.use(session({
 	secret: 'secret',
 	resave: true,
 	saveUninitialized: true
 }));
 
-
-
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/index.html'));
@@ -85,12 +81,10 @@ app.post('/shome', (req, res) =>{
 
 // for admin : 
 
-
-
-
 app.get('/shome', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/shome.html'));
 })
+
 
 app.get('/settings', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/settings.html'));
@@ -102,30 +96,30 @@ app.get('/equipment', (req, res) => {
 	let equipmentData;
 	let rentalEquipmentData;
   
-	connection.query('SELECT * FROM Equipment', (error, results, fields) => {
-	  if (error) {
+	connection.query('SELECT * FROM Equipment', (error1, results1, fields1) => {
+	  if (error1) {
 		console.error('Error fetching equipment data from MySQL:', error);
 		res.status(500).send('Internal Server Error');
 		return;
 	  }
 
 
-	  //const equipmentData = results; // Assuming results is an array of equipment items
-	  equipmentData.push(results);
-	  // Render the template with the data
-	  res.render('equipment', { equipmentData});
-	});/*
-	connection.query('SELECT * FROM Rentable_equipment', (error1, results1, fields) => {
-		if (error1) {
-		  console.error('Error fetching equipment data from MySQL:', error1);
-		  res.status(500).send('Internal Server Error');
-		  return;
+	  const equipmentData = results1; // Assuming results is an array of equipment items
+
+
+	connection.query('SELECT * FROM rentable_equipment', (error2, results2, fields2) => {
+		if (error2) {
+			console.error('Error fetching rentable equipment data from MySQL:', error2);
+			res.status(500).send('Internal Server Error');
+			return;
 		}
-		//const equipmentData = results; // Assuming results is an array of equipment items
-		equipmentData.push(results1);
-		// Render the template with the data
-	  });
-	  res.render('equipment', { equipmentData});*/
+
+		// Store the data in rentalEquipmentData
+		rentalEquipmentData = results2;
+
+		res.render('equipment', { equipmentData, rentalEquipmentData });
+	});
+	});
 });
 
 
@@ -226,7 +220,7 @@ function generateHourOptions() {
 	  options += `<option value="${hour}">${hour}:00</option>`;
 	}
 	return options;
-  }
+}
 
 const port = process.env.PORT || 3001;
 
