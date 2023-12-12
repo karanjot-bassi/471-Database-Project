@@ -28,13 +28,12 @@ var mysql = require("mysql2");
 // connect to the database 
 var connection = mysql.createConnection({
     host: 'localhost',
-    database: 'UniSports',
+    database: 'unisports',
     user: 'root',
     //password: 'Uniting481fall'
-    //password:'marwane123'
-	password: 'root'
+    password:'marwane123'
+	//password: 'root'
 });
-
 
 
 app.use(session({
@@ -43,10 +42,7 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-
-
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/index.html'));
@@ -58,20 +54,17 @@ app.post('/shome', (req, res) =>{
     let username = req.body.username;
 	let password = req.body.password;
 
-    // for testing purposes 
-    //console.log("captured", username);
-    // console.log("captured", password);
-
     if (username && password) {
 		// GET THE SQL QUERY DATA
 		connection.query('SELECT * FROM student WHERE Student_id = ? AND Spassword = ?', [username, password], function(error, results, fields) {
-			// If there is an issue with the query, output the error
+			//REPORT ERROR 
 			if (error) throw error;
 			// If the account exists
 			if (results.length > 0) {
 				// Authenticate the user
 				req.session.loggedin = true;
 				req.session.password = password;
+				req.session.Student_id= username;
 				// Redirect to home page
 				res.redirect('shome');
 			} else {
@@ -88,12 +81,10 @@ app.post('/shome', (req, res) =>{
 
 // for admin : 
 
-
-
-
 app.get('/shome', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/shome.html'));
 })
+
 
 app.get('/settings', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/settings.html'));
@@ -105,40 +96,31 @@ app.get('/equipment', (req, res) => {
 	let equipmentData;
 	let rentalEquipmentData;
   
-	connection.query('SELECT * FROM Equipment', (error, results, fields) => {
-	  if (error) {
+	connection.query('SELECT * FROM Equipment', (error1, results1, fields1) => {
+	  if (error1) {
 		console.error('Error fetching equipment data from MySQL:', error);
 		res.status(500).send('Internal Server Error');
 		return;
 	  }
-	  equipmentData = results;
-  
-	  // Check if both queries are complete before rendering the view
-	  if (rentalEquipmentData !== undefined) {
-		renderEquipmentView();
-	  }
-	});
-  
-	connection.query('SELECT * FROM Rentable_equipment', (error, results, fields) => {
-	  if (error) {
-		console.error('Error fetching rental equipment data from MySQL:', error);
-		res.status(500).send('Internal Server Error');
-		return;
-	  }
-	  rentalEquipmentData = results;
-  
-	  // Check if both queries are complete before rendering the view
-	  if (equipmentData !== undefined) {
-		renderEquipmentView();
-	  }
-	});
-  
-	function renderEquipmentView() {
-	  res.render('equipment', { equipmentData, rentalEquipmentData });
-	}
-  });
 
 
+	  const equipmentData = results1; // Assuming results is an array of equipment items
+
+
+	connection.query('SELECT * FROM rentable_equipment', (error2, results2, fields2) => {
+		if (error2) {
+			console.error('Error fetching rentable equipment data from MySQL:', error2);
+			res.status(500).send('Internal Server Error');
+			return;
+		}
+
+		// Store the data in rentalEquipmentData
+		rentalEquipmentData = results2;
+
+		res.render('equipment', { equipmentData, rentalEquipmentData });
+	});
+	});
+});
 
 
 
@@ -238,7 +220,7 @@ function generateHourOptions() {
 	  options += `<option value="${hour}">${hour}:00</option>`;
 	}
 	return options;
-  }
+}
 
 const port = process.env.PORT || 3001;
 
