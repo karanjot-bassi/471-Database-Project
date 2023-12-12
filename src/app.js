@@ -28,10 +28,10 @@ var mysql = require("mysql2");
 // connect to the database 
 var connection = mysql.createConnection({
     host: 'localhost',
-    database: 'UniSports',
+    database: 'unisports',
     user: 'root',
-    password: 'Uniting481fall'
-    //password:'marwane123'
+    //password: 'Uniting481fall'
+    password:'marwane123'
 	//password: 'root'
 });
 
@@ -58,20 +58,17 @@ app.post('/shome', (req, res) =>{
     let username = req.body.username;
 	let password = req.body.password;
 
-    // for testing purposes 
-    //console.log("captured", username);
-    // console.log("captured", password);
-
     if (username && password) {
 		// GET THE SQL QUERY DATA
 		connection.query('SELECT * FROM student WHERE Student_id = ? AND Spassword = ?', [username, password], function(error, results, fields) {
-			// If there is an issue with the query, output the error
+			//REPORT ERROR 
 			if (error) throw error;
 			// If the account exists
 			if (results.length > 0) {
 				// Authenticate the user
 				req.session.loggedin = true;
 				req.session.password = password;
+				req.session.Student_id= username;
 				// Redirect to home page
 				res.redirect('shome');
 			} else {
@@ -96,8 +93,48 @@ app.get('/shome', (req, res) => {
 })
 
 app.get('/settings', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/settings.html'));
-})
+    // Assuming you have the user information stored in the session
+    const userData = {
+        name: "John Doe", // Replace with the actual name from the session
+        ucid: "UC12345678" // Replace with the actual UCID from the session
+    };
+
+    res.render('settings', { userData });
+});
+
+
+app.post('/settings', (req, res) => {
+    // Extract user input from the request body
+    const Name_on_card = req.body.Name_on_card;
+    const Card_number = req.body.Card_number;
+    const Card_expire = req.body.Card_expire;
+    const CVV = req.body.CVV;
+
+
+
+    // Assuming you have the user ID stored in the session
+    const Student_id = req.session.Student_id; // Replace with the actual session variable for user ID
+	
+
+
+	console.log("Captured Data:", Name_on_card, Card_number, Card_expire, CVV, Student_id);
+
+    // Update the user's payment information in the database
+    connection.query('UPDATE student_payment_info SET Name_on_card = ?, Card_number = ? , Card_expire = ? , CVV = ? WHERE Student_id = ?', [Name_on_card,Card_number,Card_expire,CVV,Student_id], (error, results) => {
+        if (error) {
+            console.error('Error updating user data in MySQL:', error);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        // Assuming success, you can redirect or render a success page
+
+		console.log("SQL Query:", 'UPDATE student_payment_info SET Name_on_card = ?, Card_number = ? , Card_expire = ? , CVV = ? WHERE Student_id = ?', [Name_on_card, Card_number, Card_expire, CVV, Student_id]);
+        res.redirect('/settings');
+				
+    });
+});
+
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -108,6 +145,8 @@ app.get('/equipment', (req, res) => {
 		res.status(500).send('Internal Server Error');
 		return;
 	  }
+
+
 	  //const equipmentData = results; // Assuming results is an array of equipment items
 	  const equipmentData = results;
 	  // Render the template with the data
