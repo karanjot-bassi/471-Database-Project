@@ -99,7 +99,9 @@ app.get('/settings', (req, res) => {
 
 app.set('views', path.join(__dirname, 'views'));
 app.get('/equipment', (req, res) => {
-	var equipmentData = [];
+	let equipmentData;
+	let rentalEquipmentData;
+  
 	connection.query('SELECT * FROM Equipment', (error, results, fields) => {
 	  if (error) {
 		console.error('Error fetching equipment data from MySQL:', error);
