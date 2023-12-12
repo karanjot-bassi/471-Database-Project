@@ -119,26 +119,27 @@
       <p>Here is equipment you can rent</p>
     </div>
 
-    <div id="regular-cards">
-      <!-- The loop to dynamically create cards based on the fetched data -->
-      <% rentalEquipmentData.forEach(item1 => { %>
-      <div class="card" id="regular-card">
-        <div class="card-body">
-          <h5 class="card-title"><%= item1.Name %></h5>
-          <p class="card-text"><%= item1.Equipment_description %></p>
-          <p class="card-text">Category: <%= item1.Sport_category %></p>
-          <p class="card-text">Stock: <%= item1.Amt_in_stock %></p>
-          <p class = "card-text"> Price: <%= item1.Price %></p>
-          <a
-            href="#"
-            class="btn btn-primary"
-            onclick="showConfirmationSign('<%= item1.Name %>')"
-            >Purchase</a>
+    <div id="regular-cards">        
+        <!-- The loop to dynamically create cards based on the fetched data -->
+        <% rentalEquipmentData.forEach ( item => { %>
+        <div class="card" id="regular-card">
+
+          <div class="card-body">
+            <h5 class="card-title"><%= item.Name %></h5>
+            <p class="card-text"><%= item.Equipment_description %></p>
+            <p class="card-text">Category: <%= item.Sport_category %></p>
+            <p class="card-text">Stock: <%= item.Amt_in_stock %></p>
+            <p class = "card-text"> Price: <%= item.Price %></p>
+            <p class = "card-text"> Maximum days to rent: <%= item.Max_duration %></p>
+            <a
+              href="#"
+              class="btn btn-primary"
+              onclick="showRentalConfirmationSign('<%= item.Name %>')"
+              >Rent</a>
+          </div>
         </div>
+        <% }); %>
       </div>
-      <% }); %>
-    </div>
-    
 
     <hr>
 

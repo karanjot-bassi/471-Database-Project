@@ -31,8 +31,8 @@ var connection = mysql.createConnection({
     database: 'unisports',
     user: 'root',
     //password: 'Uniting481fall'
-    password:'marwane123'
-	//password: 'root'
+    //password:'marwane123'
+	password: 'root'
 });
 
 
@@ -96,31 +96,38 @@ app.get('/equipment', (req, res) => {
 	let equipmentData;
 	let rentalEquipmentData;
   
-	connection.query('SELECT * FROM Equipment', (error1, results1, fields1) => {
-	  if (error1) {
+	connection.query('SELECT * FROM Equipment', (error, results, fields) => {
+	  if (error) {
 		console.error('Error fetching equipment data from MySQL:', error);
 		res.status(500).send('Internal Server Error');
 		return;
 	  }
-
-
-	  const equipmentData = results1; // Assuming results is an array of equipment items
-
-
-	connection.query('SELECT * FROM rentable_equipment', (error2, results2, fields2) => {
-		if (error2) {
-			console.error('Error fetching rentable equipment data from MySQL:', error2);
-			res.status(500).send('Internal Server Error');
-			return;
-		}
-
-		// Store the data in rentalEquipmentData
-		rentalEquipmentData = results2;
-
-		res.render('equipment', { equipmentData, rentalEquipmentData });
+	  equipmentData = results;
+  
+	  // Check if both queries are complete before rendering the view
+	  if (rentalEquipmentData !== undefined) {
+		renderEquipmentView();
+	  }
 	});
+  
+	connection.query('SELECT * FROM Rentable_equipment', (error, results, fields) => {
+	  if (error) {
+		console.error('Error fetching rental equipment data from MySQL:', error);
+		res.status(500).send('Internal Server Error');
+		return;
+	  }
+	  rentalEquipmentData = results;
+  
+	  // Check if both queries are complete before rendering the view
+	  if (equipmentData !== undefined) {
+		renderEquipmentView();
+	  }
 	});
-});
+  
+	function renderEquipmentView() {
+	  res.render('equipment', { equipmentData, rentalEquipmentData });
+	}
+  });
 
 
 
@@ -152,7 +159,6 @@ app.get('/programs', (req, res) => {
 		res.status(500).send('Internal Server Error');
 		return;
 		}
-		//const equipmentData = results; // Assuming results is an array of equipment items
 		const ProgramsData = results;
 		// Render the template with the data
 		res.render('programs', { ProgramsData });
