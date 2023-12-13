@@ -123,8 +123,10 @@
         // Initialize flatpickr
         flatpickr("#bookingDate", {
           mode: "range",
-          dateFormat: "Y-m-d",
-          minDate: "today", // Optional: set the minimum date to today
+          dateFormat: "Y-m-d H:i", // Include time in the format
+          minDate: "today",
+          enableTime: true, // Enable time selection
+          time_24hr: true,
         });
       }
 
