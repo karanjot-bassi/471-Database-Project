@@ -1,8 +1,8 @@
 /*
 
-Resources : 
+Resources : ( we didn't not copy the code straight up from here , we just tried to get some ideas on how stuff work)
 1) help with setting up the login(connection to database) :  https://www.youtube.com/watch?v=Mn0rdbJPWEo 
-2) HELP WITH CHECKING AND AUTH
+2) HELP WITH CHECKING AND AUTH : https://stackoverflow.com/questions/52982877/import-sql-file-using-express-js 
 */
 
 const express = require('express');
@@ -34,8 +34,8 @@ var connection = mysql.createConnection({
     host: 'localhost',
     database: 'unisports',
     user: 'root',
-    password: 'Uniting481fall'
-    //password:'marwane123'
+    //password: 'Uniting481fall'
+    password:'marwane123'
 	//password: 'root'
 });
 
