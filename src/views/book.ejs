@@ -23,6 +23,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.css" />
+
   </head>
 
   <body>
@@ -95,22 +99,52 @@
       <% }); %>
     </div>
 
-    <div id="confirmationSign">
-      <form action="/action_page.php">
-        <label for="bookingTime">Selection (date and time):</label>
-        <input type="datetime-local" id="bookingTime" name="bookingTime">
-        <input type="submit" value="Submit">
+    <div id="ConfirmationSign">
+      <h2>Confirm Rental</h2>
+      <p>
+        Please choose a date to book <span id="confirmationItem"></span>.
+      </p>
+      <form id="bookingForm">
+        <label for="bookingDate">Select Date:</label>
+        <input type="text" id="bookingDate" name="bookingDate" required>
+        <button type="button" onclick="confirmBooking()">Confirm</button>
+        <button type="button" onclick="closeBooking()">Cancel</button>
       </form>
     </div>
 
       <script>
-        function showConfirmationSign(itemName) {
-          var confirmationSign = document.getElementById("confirmationSign");
-          var confirmationItem = document.getElementById("confirmationItem");
+      function showConfirmationSign(itemName) {
+        var ConfirmationSign = document.getElementById("ConfirmationSign");
+        var ConfirmationItem = document.getElementById("confirmationItem");
 
-          confirmationItem.innerHTML = itemName;
-          confirmationSign.style.display = "block";
+        ConfirmationItem.innerHTML = itemName;
+        ConfirmationSign.style.display = "block";
+
+        // Initialize flatpickr
+        flatpickr("#bookingDate", {
+          mode: "range",
+          dateFormat: "Y-m-d",
+          minDate: "today", // Optional: set the minimum date to today
+        });
+      }
+
+      function confirmBooking() {
+        var selectedDates = document.getElementById("bookingDate").value;
+
+        // Validate the selected date(s) (you may need additional validation)
+        if (!selectedDates) {
+          alert("Please select a valid date or date range for the booking.");
+          return;
         }
+
+        alert("Booking Confirmed!\nSelected Date(s): " + selectedDates);
+        closeBooking();
+      }
+
+      function closeBooking() {
+        var ConfirmationSign = document.getElementById("ConfirmationSign");
+        ConfirmationSign.style.display = "none";
+      }
       </script>
 
     <!-- Bootstrap JavaScript Libraries -->
