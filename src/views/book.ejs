@@ -99,7 +99,7 @@
       <% }); %>
     </div>
 
-    <div id="ConfirmationSign">
+    <div id="bookingConfirmationSign">
       <h2>Confirm Rental</h2>
       <p>
         Please choose a date to book <span id="confirmationItem"></span>.
@@ -114,7 +114,7 @@
 
       <script>
       function showConfirmationSign(itemName) {
-        var ConfirmationSign = document.getElementById("ConfirmationSign");
+        var ConfirmationSign = document.getElementById("bookingConfirmationSign");
         var ConfirmationItem = document.getElementById("confirmationItem");
 
         ConfirmationItem.innerHTML = itemName;
@@ -142,7 +142,7 @@
       }
 
       function closeBooking() {
-        var ConfirmationSign = document.getElementById("ConfirmationSign");
+        var ConfirmationSign = document.getElementById("bookingConfirmationSign");
         ConfirmationSign.style.display = "none";
       }
       </script>
