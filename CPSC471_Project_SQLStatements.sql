@@ -134,6 +134,14 @@ FOREIGN KEY (Student_id) REFERENCES Student(Student_id) ON DELETE
 CASCADE
 );
 
+CREATE TABLE purchased (
+  Equipment_id char(4) NOT NULL,
+  Student_id char(8) NOT NULL,
+  PRIMARY KEY (Equipment_id, Student_id),
+  CONSTRAINT fk_equipment FOREIGN KEY (Equipment_id) REFERENCES equipment (Equipment_id) ON DELETE CASCADE,
+  CONSTRAINT fk_student FOREIGN KEY (Student_id) REFERENCES student (Student_id) ON DELETE CASCADE
+); 
+
 /* End of table creation section */
 
 /* Beginning of sample data */
