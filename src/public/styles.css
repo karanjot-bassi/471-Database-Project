@@ -162,10 +162,23 @@ h6 {
   cursor: pointer;
 }
 
-
 #def-pay {
   display: flex;
-  display: inline;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#pay-card {
+  max-width: 500px;
+  margin: auto;
+}
+
+#pay-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #admin-button {
