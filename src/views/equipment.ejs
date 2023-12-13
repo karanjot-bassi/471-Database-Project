@@ -165,6 +165,68 @@
       </form>
     </div>
 
+
+    <script>
+      // ... (existing functions) ...
+    
+    function confirmRental(itemName) {
+
+    fetch('/confirmRental', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ itemName, selectedDates: }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            
+        } else {
+            alert(data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error confirming rental:', error);
+        alert('An error occurred. Please try again.');
+    });
+  }
+
+  function confirmPurchase(itemName) {
+    // Log item information to the console
+    console.log('Item Information:', {
+        itemName: itemName,
+        // Add other item properties as needed
+    });
+
+    // Continue with the rest of your code...
+
+    // AJAX request to update the table
+    fetch('/confirmPurchase', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ itemName }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            // You can update the UI here if needed
+        } else {
+            alert(data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error confirming purchase:', error);
+        alert('An error occurred. Please try again.');
+    });
+}
+    
+    </script>
+
     <script>
       function showConfirmationSign(itemName) {
         var confirmationSign = document.getElementById("confirmationSign");

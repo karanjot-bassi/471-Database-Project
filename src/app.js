@@ -98,6 +98,8 @@ app.get('/settings', (req, res) => {
     res.render('settings'); // 'settings' is the name of your EJS file without the extension
 });
 
+
+
 app.post('/settings', (req, res) => {
     // Extract user input from the form
     const Name_on_card = req.body.Name_on_card;
@@ -113,7 +115,7 @@ app.post('/settings', (req, res) => {
 	const dateArray = rawDate.split('/');
 	const formattedDate = `20${dateArray[1]}-${dateArray[0]}-01`;
 
-	console.log("captured", Name_on_card , Card_number , Card_expire , CVV);
+	console.log("captured", Name_on_card , Card_number , Card_expire , CVV, Student_id);
 	    // Validate the input as needed
 
     // Insert the data into the database (adjust the query accordingly)
@@ -125,11 +127,46 @@ app.post('/settings', (req, res) => {
             return;
         }
         // Data inserted successfully
-
+		req.session.Card_number = Card_number;
 		console.log('SQL Query Results:', results);
+
+
+		
 		res.redirect('/settings');
     });
 });
+
+
+
+app.get('/settings', (req, res) => {
+    const Student_id = req.session.Student_id;
+
+    // Retrieve the user's payment info from the database
+    const selectQuery = 'SELECT Card_number FROM student_payment_info WHERE Student_id = ?';
+    connection.query(selectQuery, [Student_id], (error, results, fields) => {
+        if (error) {
+            console.error('Error retrieving data from student_payment_info table:', error);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        // Check if the user has entered payment info
+        if (results.length > 0) {
+            const Card_number = results[0].Card_number;
+
+			console.log("Card ",Card_number );
+            // Render the settings page and pass the cardNumber to the template
+            res.render('settings', { Card_number });
+
+			
+        } else {
+            // Render the settings page without the cardNumber
+            res.render('settings');
+        }
+    });
+});
+
+
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -145,7 +182,7 @@ app.get('/equipment', (req, res) => {
 	  }
 	  equipmentData = results;
   
-	  // Check if both queries are complete before rendering the view
+	  
 	  if (rentalEquipmentData !== undefined) {
 		renderEquipmentView();
 	  }
@@ -159,7 +196,7 @@ app.get('/equipment', (req, res) => {
 	  }
 	  rentalEquipmentData = results;
   
-	  // Check if both queries are complete before rendering the view
+	  
 	  if (equipmentData !== undefined) {
 		renderEquipmentView();
 	  }
@@ -192,6 +229,7 @@ app.get('/book', (req, res) => {
 });
 
 
+
 app.set('views', path.join(__dirname, 'views'));
 app.get('/programs', (req, res) => {
 	connection.query('SELECT * FROM Program', (error, results, fields) => {
@@ -214,10 +252,8 @@ app.get('/adminsignin', (req, res) => {
 
 
 app.post('/adminhome', (req, res) =>{
-
     let username = req.body.username;
 	let password = req.body.password;
-
     // for testing purposes 
     //console.log("captured", username);
     //console.log("captured", password);
@@ -249,17 +285,64 @@ app.post('/adminhome', (req, res) =>{
 
 });
 
+
 app.get('/adminhome', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/adminhome.html'));
 })
+
+
 
 app.get('/studentLU', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/studentLU.html'));
 })
 
-app.get('/buy', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/buy.html'));
-})
+
+// TRYING TO SET UP SOME ACTIONS FOR THE PURCAHSE BUTTON 
+
+app.post('/confirmPurchase', (req, res) => {
+	const itemName = req.body.itemName;
+	const studentId = req.session.Student_id; // Assuming you have a student ID in the session
+  
+	// Perform the necessary SQL update for the purchase confirmation
+	const updateQuery = 'UPDATE your_table_name SET purchased = true WHERE itemName = ? AND studentId = ?';
+  
+	connection.query(updateQuery, [itemName, studentId], (error, results, fields) => {
+	  if (error) {
+		console.error('Error updating data in the table:', error);
+		res.json({ success: false, error: 'Internal Server Error' });
+		return;
+	  }
+  
+	  // Data updated successfully
+	  console.log('SQL Query Results:', results);
+	  res.json({ success: true, message: 'Purchase confirmed successfully!' });
+	});
+});
+
+
+
+app.post('/confirmRental', (req, res) => {
+    const itemName = req.body.itemName;
+    const selectedDates = req.body.selectedDates;
+
+    // Validate and process the data as needed
+
+	
+    // Perform the necessary SQL insert for the rental confirmation
+    const insertQuery = 'INSERT INTO your_rental_table (itemName, selectedDates) VALUES (?, ?)';
+
+    connection.query(insertQuery, [itemName, selectedDates], (error, results, fields) => {
+        if (error) {
+            console.error('Error inserting data into your_rental_table table:', error);
+            res.json({ success: false, error: 'Internal Server Error' });
+            return;
+        }
+
+        // Data inserted successfully
+        console.log('SQL Query Results:', results);
+        res.json({ success: true, message: 'Rental confirmed successfully!' });
+    });
+});
 
 function generateHourOptions() {
 	let options = '';
@@ -268,6 +351,7 @@ function generateHourOptions() {
 	}
 	return options;
 }
+
 
 const port = process.env.PORT || 3001;
 
