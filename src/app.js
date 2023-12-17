@@ -98,51 +98,6 @@ app.get('/shome', (req, res) => {
 app.set('views', path.join(__dirname, 'views'));
 
 app.get('/settings', (req, res) => {
-    // Render the initial settings page
-    res.render('settings'); // 'settings' is the name of your EJS file without the extension
-});
-
-
-
-app.post('/settings', (req, res) => {
-    // Extract user input from the form
-    const Name_on_card = req.body.Name_on_card;
-    const Card_number = req.body.Card_number;
-    const Card_expire = req.body.Card_expire;
-    const CVV = req.body.CVV;
-
-
-	const Student_id = req.session.Student_id;
-
-		// FORMATTED DATE : 
-	const rawDate = req.body.Card_expire;
-	const dateArray = rawDate.split('/');
-	const formattedDate = `20${dateArray[1]}-${dateArray[0]}-01`;
-
-	console.log("captured", Name_on_card , Card_number , Card_expire , CVV, Student_id);
-	    // Validate the input as needed
-
-    // Insert the data into the database (adjust the query accordingly)
-    const insertQuery = 'INSERT INTO student_payment_info (Student_id,Name_on_card, Card_number, Card_expire, CVV) VALUES (?, ?, ?, ?, ?)';
-    connection.query(insertQuery, [Student_id, Name_on_card, Card_number, formattedDate , CVV], (error, results, fields) => {
-        if (error) {
-            console.error('Error inserting data into student_payment_info table:', error);
-            res.status(500).send('Internal Server Error');
-            return;
-        }
-        // Data inserted successfully
-		req.session.Card_number = Card_number;
-		console.log('SQL Query Results:', results);
-
-
-		
-		res.redirect('/settings');
-    });
-});
-
-
-
-app.get('/settings', (req, res) => {
     const Student_id = req.session.Student_id;
 
     // Retrieve the user's payment info from the database
@@ -154,24 +109,75 @@ app.get('/settings', (req, res) => {
             return;
         }
 
+        // Initialize Card_number to an empty string
+        let Card_number = '';
+
         // Check if the user has entered payment info
         if (results.length > 0) {
-            const Card_number = results[0].Card_number;
-
-			console.log("Card ",Card_number );
-            // Render the settings page and pass the cardNumber to the template
-            res.render('settings', { Card_number });
-
-			
-        } else {
-            // Render the settings page without the cardNumber
-            res.render('settings');
+            Card_number = results[0].Card_number;
+            console.log("Card ", Card_number);
         }
+
+        // Render the settings page and pass the cardNumber to the template
+        res.render('settings', { Card_number });
     });
 });
 
 
+app.post('/settings', (req, res) => {
+    // Extract user input from the form
+    const Name_on_card = req.body.Name_on_card;
+    const Card_number = req.body.Card_number;
+    const Card_expire = req.body.Card_expire;
+    const CVV = req.body.CVV;
 
+    const Student_id = req.session.Student_id;
+
+    // FORMATTED DATE :
+    const rawDate = req.body.Card_expire;
+    const dateArray = rawDate.split('/');
+    const formattedDate = `${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`;
+
+    console.log("captured", Name_on_card, Card_number, Card_expire, CVV, Student_id);
+    // Validate the input as needed
+
+    
+    const insertQuery = 'INSERT INTO student_payment_info (Student_id,Name_on_card, Card_number, Card_expire, CVV) VALUES (?, ?, ?, ?, ?)';
+    connection.query(insertQuery, [Student_id, Name_on_card, Card_number, formattedDate, CVV], (error, results, fields) => {
+        if (error) {
+            console.error('Error inserting data into student_payment_info table:', error);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+        // Data inserted successfully
+        req.session.Card_number = Card_number;
+        console.log('SQL Query Results:', results);
+
+        res.redirect('/settings');
+    });
+});
+
+
+app.post('/delete-card', (req, res) => {
+    const Student_id = req.session.Student_id;
+
+    
+    const deleteQuery = 'DELETE FROM student_payment_info WHERE Student_id = ?';
+    connection.query(deleteQuery, [Student_id], (error, results, fields) => {
+        if (error) {
+            console.error('Error deleting data from student_payment_info table:', error);
+            res.status(500).send('Internal Server Error');
+            return;
+        }
+
+        // Delete operation successful
+        req.session.Card_number = undefined; // Clear the stored card number in the session
+        console.log('Deleted card information for Student ID:', Student_id);
+
+        
+        res.redirect('/settings');
+    });
+});
 
 app.set('views', path.join(__dirname, 'views'));
 app.get('/equipment', (req, res) => {

@@ -75,26 +75,23 @@
 
 
 
-    <div id="def-pay">
-      <h1 class="display-5 text-center mt-4">Default Payment</h1>
-      <div class="row">
-          <div class="text-center">
-              <div class="card" id="pay-card">
-                  <div class="card-body">
-                      <h5 class="card-title">Card On File:</h5>
-                      <p class="card-text">4202 2942 30</p>
-                      <a href="#" class="btn btn-primary">Delete</a>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-    
+    <div id="cardInfo">
+      <% if (Card_number) { %>
+          Card Number: <%= Card_number %><br>
+          <form method="post" action="/delete-card">
+            <button type="submit" name="deleteCard">Delete</button>
+        </form>
+      <% } else { %>
+          <!-- Display a placeholder or message if no card info available -->
+          No card information available.
+      <% } %>
+    </div>
+  
             <!-- Update Payment Info Form -->
-            <div id="pay-info">
+    <div id="pay-info">
                 <h1 class="display-5 text-center mt-4">Payment Info</h1>
                 <form action="/settings" method="post">
-                    <!-- Add form elements as in your original HTML -->
+                    
                     <div class="mb-3">
                         <label for="Name_on_card" class="form-label">Name on Card</label>
                         <input type="text" class="form-control" id="Name_on_card" name="Name_on_card" />
