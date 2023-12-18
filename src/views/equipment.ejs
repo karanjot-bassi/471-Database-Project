@@ -104,7 +104,7 @@
           <a
             href="#"
             class="btn btn-primary"
-            onclick="showConfirmationSign('<%= item.Name %>')"
+            onclick="showConfirmationSign('<%= item.Name %>','<%= item.Id %>')"
             >Purchase</a>
         </div>
       </div>
@@ -134,7 +134,7 @@
             <a
               href="#"
               class="btn btn-primary"
-              onclick="showRentalConfirmationSign('<%= item.Name %>')"
+              onclick="showRentalConfirmationSign('<%= item.Name %>', '<%= item.Equipment_id %>')"
               >Rent</a>
           </div>
         </div>
@@ -148,7 +148,7 @@
       <p>
         Are you sure you want to purchase <span id="confirmationItem"></span>?
       </p>
-      <button onclick="confirmPurchase()">Confirm</button>
+      <button onclick="confirmPurchase('<%= itemId %>')">Confirm</button>
       <button onclick="closePurchase()">Cancel</button>
     </div>
 
@@ -160,7 +160,7 @@
       <form id="rentalForm">
         <label for="rentalDate">Select Date:</label>
         <input type="text" id="rentalDate" name="rentalDate" required>
-        <button type="button" onclick="confirmRental()">Confirm</button>
+        <button type="button" onclick="confirmRental(itemId)">Confirm</button>
         <button type="button" onclick="closeRental()">Cancel</button>
       </form>
     </div>
@@ -169,83 +169,75 @@
     <script>
       // ... (existing functions) ...
     
-    function confirmRental(itemName) {
-
-    fetch('/confirmRental', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ itemName, selectedDates: }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert(data.message);
-            
-        } else {
-            alert(data.error);
-        }
-    })
-    .catch(error => {
-        console.error('Error confirming rental:', error);
-        alert('An error occurred. Please try again.');
-    });
-  }
-
-  function confirmPurchase(itemName) {
-    // Log item information to the console
-    console.log('Item Information:', {
-        itemName: itemName,
-        // Add other item properties as needed
-    });
-
-    // Continue with the rest of your code...
-
-    // AJAX request to update the table
-    fetch('/confirmPurchase', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ itemName }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert(data.message);
-            // You can update the UI here if needed
-        } else {
-            alert(data.error);
-        }
-    })
-    .catch(error => {
-        console.error('Error confirming purchase:', error);
-        alert('An error occurred. Please try again.');
-    });
+      function confirmRental(itemId, selectedDates) {
+  fetch('/equipment/confirmRental', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ itemId, selectedDates }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert(data.message);
+      closeRental();
+    } else {
+      alert(data.error);
+    }
+  })
+  .catch(error => {
+    console.error('Error confirming rental:', error);
+    alert('An error occurred. Please try again.');
+  });
 }
+
+function confirmPurchase(itemId) {
+  fetch('/equipment/confirmPurchase', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ itemId }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert(data.message);
+      closePurchase();
+    } else {
+      alert(data.error);
+    }
+  })
+  .catch(error => {
+    console.error('Error confirming purchase:', error);
+    alert('An error occurred. Please try again.');
+  });
+}
+
     
     </script>
 
     <script>
-      function showConfirmationSign(itemName) {
+      function showConfirmationSign(itemName, itemId) {
         var confirmationSign = document.getElementById("confirmationSign");
         var confirmationItem = document.getElementById("confirmationItem");
-
+        var itemId = itemId;
         confirmationItem.innerHTML = itemName;
         confirmationSign.style.display = "block";
       }
-
+/*
       function confirmPurchase() {
         alert("Purchase Confirmed!");
         closePurchase();
-      }
+      }*/
+
       function closePurchase() {
         var confirmationSign = document.getElementById("confirmationSign");
         confirmationSign.style.display = "none";
       }
 
-      function showRentalConfirmationSign(itemName) {
+      function showRentalConfirmationSign(itemName, itemId) {
         var rentalConfirmationSign = document.getElementById("rentalConfirmationSign");
         var rentalConfirmationItem = document.getElementById("confirmationRentalItem");
 
@@ -259,7 +251,7 @@
           minDate: "today", // Optional: set the minimum date to today
         });
       }
-
+/*
       function confirmRental() {
         var selectedDates = document.getElementById("rentalDate").value;
 
@@ -271,7 +263,7 @@
 
         alert("Rental Confirmed!\nSelected Date(s): " + selectedDates);
         closeRental();
-      }
+      }*/
 
       function closeRental() {
         var rentalConfirmationSign = document.getElementById("rentalConfirmationSign");

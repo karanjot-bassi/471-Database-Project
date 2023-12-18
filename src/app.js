@@ -38,8 +38,8 @@ var connection = mysql.createConnection({
     database: 'unisports',
     user: 'root',
     //password: 'Uniting481fall'
-    password:'marwane123'
-	//password: 'root'
+    //password:'marwane123'
+	password: 'root'
 });
 
 
@@ -50,6 +50,7 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'pages/index.html'));
@@ -308,15 +309,14 @@ app.get('/studentLU', (req, res) => {
 
 
 // TRYING TO SET UP SOME ACTIONS FOR THE PURCAHSE BUTTON 
-
-app.post('/confirmPurchase', (req, res) => {
-	const itemName = req.body.itemName;
+app.post('/equipment/confirmPurchase', (req, res) => {
+	const itemId = req.body.itemId;
 	const studentId = req.session.Student_id; // Assuming you have a student ID in the session
   
 	// Perform the necessary SQL update for the purchase confirmation
-	const updateQuery = 'UPDATE your_table_name SET purchased = true WHERE itemName = ? AND studentId = ?';
+	const updateQuery = 'INSERT INTO purchased (Equipment_id, Student_id) VALUES (?, ?);';
   
-	connection.query(updateQuery, [itemName, studentId], (error, results, fields) => {
+	connection.query(updateQuery, [itemId, studentId], (error, results, fields) => {
 	  if (error) {
 		console.error('Error updating data in the table:', error);
 		res.json({ success: false, error: 'Internal Server Error' });
@@ -331,19 +331,19 @@ app.post('/confirmPurchase', (req, res) => {
 
 
 
-app.post('/confirmRental', (req, res) => {
-    const itemName = req.body.itemName;
+app.post('/equipment/confirmRental', (req, res) => {
+    const itemId = req.body.itemId;
     const selectedDates = req.body.selectedDates;
 
     // Validate and process the data as needed
 
 	
     // Perform the necessary SQL insert for the rental confirmation
-    const insertQuery = 'INSERT INTO your_rental_table (itemName, selectedDates) VALUES (?, ?)';
+    const insertQuery = 'INSERT INTO Equipment_rental (Equipment_id, selectedDates) VALUES (?, ?)';
 
     connection.query(insertQuery, [itemName, selectedDates], (error, results, fields) => {
         if (error) {
-            console.error('Error inserting data into your_rental_table table:', error);
+            console.error('Error inserting data into the Equipment_rental table:', error);
             res.json({ success: false, error: 'Internal Server Error' });
             return;
         }
