@@ -38,8 +38,8 @@ var connection = mysql.createConnection({
     database: 'unisports',
     user: 'root',
     //password: 'Uniting481fall'
-    //password:'marwane123'
-	password: 'root'
+    password:'marwane123'
+	//password: 'root'
 });
 
 
