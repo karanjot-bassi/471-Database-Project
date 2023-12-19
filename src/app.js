@@ -37,8 +37,8 @@ var connection = mysql.createConnection({
     host: 'localhost',
     database: 'unisports',
     user: 'root',
-    //password: 'Uniting481fall'
-    password:'marwane123'
+    password: 'Uniting481fall'
+    //password:'marwane123'
 	//password: 'root'
 });
 
@@ -76,12 +76,11 @@ app.post('/shome', (req, res) =>{
 				// Redirect to home page
 				res.redirect('shome');
 			} else {
-				res.send('Incorrect Username and/or Password!');
+				res.render('index', {error: 'Incorrect Username and/or Password'});
 			}			
 		});
 	} else {
-		res.send('Please enter Username and Password!');
-		res.end();
+		res.render('index', {error: 'Incorrect Username and/or Password'});
 	}
 
 });
@@ -106,21 +105,20 @@ app.get('/settings', (req, res) => {
     connection.query(selectQuery, [Student_id], (error, results, fields) => {
         if (error) {
             console.error('Error retrieving data from student_payment_info table:', error);
-            res.status(500).send('Internal Server Error');
+            res.render('settings', { error: 'Error in adding payment' });
             return;
         }
 
-        // Initialize Card_number to an empty string
-        let Card_number = '';
-
         // Check if the user has entered payment info
         if (results.length > 0) {
-            Card_number = results[0].Card_number;
-            console.log("Card ", Card_number);
-        }
+			req.session.Card_number = results[0].Card_number;
+        } else {
+			req.session.Card_number = undefined;
+		}
 
         // Render the settings page and pass the cardNumber to the template
-        res.render('settings', { Card_number });
+		console.log("Card ", req.session.Card_number);
+        res.render('settings', { Card_number: req.session.Card_number, error: req.query.error });
     });
 });
 
@@ -144,15 +142,21 @@ app.post('/settings', (req, res) => {
 
     
     const insertQuery = 'INSERT INTO student_payment_info (Student_id,Name_on_card, Card_number, Card_expire, CVV) VALUES (?, ?, ?, ?, ?)';
-    connection.query(insertQuery, [Student_id, Name_on_card, Card_number, formattedDate, CVV], (error, results, fields) => {
+	connection.query(insertQuery, [Student_id, Name_on_card, Card_number, formattedDate, CVV], (error, results, fields) => {
         if (error) {
             console.error('Error inserting data into student_payment_info table:', error);
-            res.status(500).send('Internal Server Error');
+            res.redirect('/settings?error=Error%20in%20adding%20payment');
             return;
         }
+
+		if (!Name_on_card || !Card_number || !Card_expire || !CVV) {
+			res.redirect('/settings?error=Please%20fill%20out%20all%20fields');
+			return;
+		}
+
         // Data inserted successfully
-        req.session.Card_number = Card_number;
-        console.log('SQL Query Results:', results);
+		req.session.Card_number = Card_number;
+		console.log('SQL Query Results:', results);
 
         res.redirect('/settings');
     });
@@ -166,7 +170,7 @@ app.post('/delete-card', (req, res) => {
     const deleteQuery = 'DELETE FROM student_payment_info WHERE Student_id = ?';
     connection.query(deleteQuery, [Student_id], (error, results, fields) => {
         if (error) {
-            console.error('Error deleting data from student_payment_info table:', error);
+			console.error('Error deleting data from student_payment_info table:', error);
             res.status(500).send('Internal Server Error');
             return;
         }
@@ -214,7 +218,7 @@ app.get('/equipment', (req, res) => {
 	});
   
 	function renderEquipmentView() {
-	  res.render('equipment', { equipmentData, rentalEquipmentData });
+	  res.render('equipment', { equipmentData, rentalEquipmentData, itemId:''});
 	}
   });
 
@@ -363,7 +367,7 @@ function generateHourOptions() {
 }
 
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);

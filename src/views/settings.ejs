@@ -73,47 +73,61 @@
       </div>
     </nav>
 
-
-
     <div id="cardInfo">
-      <% if (Card_number) { %>
-          Card Number: <%= Card_number %><br>
-          <form method="post" action="/delete-card">
-            <button type="submit" name="deleteCard">Delete</button>
-        </form>
+      <h2>Default Payment</h2>
+      <% if (Card_number) { %> Card Number: <%= Card_number %><br />
+      <form method="post" action="/delete-card">
+        <button class="btn btn-primary" type="submit" name="deleteCard">Delete</button>
+      </form>
       <% } else { %>
-          <!-- Display a placeholder or message if no card info available -->
-          No card information available.
-      <% } %>
+      <!-- Display a placeholder or message if no card info available -->
+      No card information available. <% } %>
     </div>
-  
-            <!-- Update Payment Info Form -->
+
+    <!-- Update Payment Info Form -->
     <div id="pay-info">
-                <h1 class="display-5 text-center mt-4">Payment Info</h1>
-                <form action="/settings" method="post">
-                    
-                    <div class="mb-3">
-                        <label for="Name_on_card" class="form-label">Name on Card</label>
-                        <input type="text" class="form-control" id="Name_on_card" name="Name_on_card" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="Card_number" class="form-label">Card Number</label>
-                        <input type="text" class="form-control" id="Card_number" name="Card_number" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="Card_expire" class="form-label">Card Expiry Date</label>
-                        <input type="text" id="Card_expire" name="Card_expire" placeholder="D/MM/YYYY" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="CVV" class="form-label">CVV</label>
-                        <input type="text" class="form-control" id="CVV" name="CVV" />
-                    </div>
-                    <!-- Add other form elements as needed -->
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
+      <h1 class="display-5 text-center mt-4">Payment Info</h1>
+      <form action="/settings" method="post">
+        <div class="mb-3">
+          <label for="Name_on_card" class="form-label">Name on Card</label>
+          <input
+            type="text"
+            class="form-control"
+            id="Name_on_card"
+            name="Name_on_card"
+          />
         </div>
+        <div class="mb-3">
+          <label for="Card_number" class="form-label">Card Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="Card_number"
+            name="Card_number"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="Card_expire" class="form-label">Card Expiry Date</label>
+          <input
+            type="text"
+            id="Card_expire"
+            name="Card_expire"
+            placeholder="D/MM/YYYY"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="CVV" class="form-label">CVV</label>
+          <input type="text" class="form-control" id="CVV" name="CVV" />
+        </div>
+        <!-- Add other form elements as needed -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </div>
+
+    <!-- Display errors if present -->
+    <% if (error) { %>
+    <div class="alert alert-danger mt-3" role="alert"><%= error %></div>
+    <% } %>
 
     <!-- Bootstrap JavaScript Libraries -->
     <script

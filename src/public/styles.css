@@ -184,3 +184,13 @@ h6 {
 #admin-button {
   border-radius: 8px;
 }
+
+#cardInfo {
+  max-width: 500px;
+  justify-content: center;
+  margin: auto;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
