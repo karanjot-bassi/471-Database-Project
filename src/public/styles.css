@@ -194,3 +194,11 @@ h6 {
   flex-direction: column;
   align-items: center;
 }
+
+#error-msg {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+}

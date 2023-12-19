@@ -80,7 +80,7 @@ app.post('/shome', (req, res) =>{
 			}			
 		});
 	} else {
-		res.render('index', {error: 'Incorrect Username and/or Password'});
+		res.render('index', {error: 'Please Enter in Username and or Password'});
 	}
 
 });
@@ -290,11 +290,11 @@ app.post('/adminhome', (req, res) =>{
 				// Redirect to home page
 				res.redirect('adminhome');
 			} else {
-				res.send('Incorrect Username and/or Password!');
+				res.render('adminsignin', {error: 'Incorrect Username and/or Password'});
 			}			
 		});
 	} else {
-		res.send('Please enter Username and Password!');
+		res.render('adminsignin', {error: 'Please Enter in Username and or Password'});
 		res.end();
 	}
 
@@ -307,9 +307,7 @@ app.get('/adminhome', (req, res) => {
 
 
 
-app.get('/studentLU', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/studentLU.html'));
-})
+
 
 
 // TRYING TO SET UP SOME ACTIONS FOR THE PURCAHSE BUTTON 
